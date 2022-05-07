@@ -4,10 +4,6 @@ export interface AuthenticationDto {
 }
 
 export interface IAuthInterface {
-    token: string | null;
     role: string | null;
-    login: string | null
-    photo: string
     id: number
-    exp: number | undefined
 }

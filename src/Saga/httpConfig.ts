@@ -4,7 +4,7 @@ import {IRootState} from "../Redux/configureStore";
 
 export default function* httpRequest(requestConfig: AxiosRequestConfig): any {
 
-    const token: string = yield select((x: IRootState) => x.auth.token);
+    const token: string = yield select((x: IRootState) => x.auth);
 
     if (token !== '') {
         requestConfig.headers = {

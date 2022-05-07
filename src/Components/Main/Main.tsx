@@ -69,16 +69,14 @@ export default function Main() {
     const auth = useSelector((profile: IRootState) => profile.auth)
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
     const dispatch = useDispatch()
-
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
 
     useEffect(() => {
-        if (auth.exp !== undefined && Date.now() >= auth.exp * 1000) {
-            localStorage.setItem('token', '')
+        if (auth.role === null) {
+            localStorage.setItem('role', '')
             history.push("/")
         }
     }, []);
@@ -103,7 +101,15 @@ export default function Main() {
         setAnchorEl(null)
     }
 
-    const logIn = () => history.push('/')
+    const logIn = () => {
+        console.log(auth.role)
+        if(auth.role === 'ADMIN'){
+            history.push('/base-logic-page')
+        }else if (auth.role === 'STUDENT'){
+            history.push('/profile')
+        }
+
+    }
 
     function getWindowDimensions() {
         const {innerWidth: width, innerHeight: height} = window;
@@ -114,14 +120,11 @@ export default function Main() {
     }
 
     const logOut = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('role');
         dispatch({type: LOG_OUT, payload: ''})
         history.push("/")
     }
 
-    const toMyPayments = () => {
-        history.push("/payment")
-    }
 
     return (<div>
             <AppBar style={{height: `${windowDimensions.height > 1300 ? '80px' : '60px'}`, position: 'fixed'}}
@@ -132,7 +135,7 @@ export default function Main() {
 
                 <Toolbar>
 
-                    {!auth.token &&
+                    {!auth.role &&
                     <h5 className="fromLeft" onClick={() => logIn()}>
                         {t('main.logIn')}
                     </h5>}
@@ -163,7 +166,7 @@ export default function Main() {
                         </Box>
                     </Modal>
 
-                    {auth.token &&
+                    {auth.role &&
                         <h5 className="fromLeft" onClick={() => logOut()}>
                             {t('main.logOut')}
                         </h5>

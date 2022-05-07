@@ -9,9 +9,9 @@ import {
 const students = [
     {
         id: 1,
-        name: 'Vlad',
-        surname: 'Avanesov',
-        middleName: 'Borisovich',
+        name: '?????',
+        surname: '?????????',
+        middleName: '?',
         username: 'student',
         password: 'student',
         practiceId: 1,
@@ -19,9 +19,9 @@ const students = [
     },
     {
         id: 2,
-        name: 'Vlad2',
-        surname: 'Avanesov2',
-        middleName: 'Borisovich2',
+        name: '????',
+        surname: '????????',
+        middleName: '???????',
         username: 'student2',
         password: 'student2',
         practiceId: 2,
@@ -29,21 +29,11 @@ const students = [
     },
     {
         id: 3,
-        name: 'Vlad3',
-        surname: 'Avanesov3',
-        middleName: 'Borisovich3',
+        name: '???????',
+        surname: '??????',
+        middleName: '??????',
         username: 'student3',
         password: 'student3',
-        practiceId: 1,
-        groupId: 1
-    },
-    {
-        id: 4,
-        name: 'Vlad4',
-        surname: 'Avanesov4',
-        middleName: 'Borisovich4',
-        username: 'student4',
-        password: 'student4',
         practiceId: 1,
         groupId: 1
     },

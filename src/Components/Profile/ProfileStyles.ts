@@ -4,10 +4,12 @@ export const ProfileStyles = makeStyles((theme) => ({
     profileItem: {
         display: 'flex',
         alignItems: 'center',
-        margin: '5px'
+        margin: '5px',
+        justifyContent: "space-between"
+
     },
     profileItemTemplate: {
-        width: '200px',
+        width: '250px',
         fontSize: 20
     },
     iconButton: {

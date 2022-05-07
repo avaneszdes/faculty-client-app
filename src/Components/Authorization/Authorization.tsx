@@ -9,15 +9,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import {useTranslation} from "react-i18next";
 import AlertComponent from "../Alerts/SuccessAlert";
-import {IRootState} from "../../Redux/configureStore";
-import {regexes} from "../../Global";
-import {AuthenticationDto} from "../../Redux/Auth/Auth-interfaces";
-import {AUTHORIZATION, LOG_OUT} from "../../Redux/Auth/Auth-constants";
+import { AUTHORIZATION_SUCCEED} from "../../Redux/Auth/Auth-constants";
+import axios from "axios";
+import {SET_ALERT_MESSAGE_SUCCEED} from "../../Redux/Alert/Alert-constants";
+import history from "../History/history";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,17 +40,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const {password, login} = regexes
 const vScheme = yup.object().shape({
-    password: yup.string().required("Required").matches(new RegExp(password), 'Password is not valid'),
-    login: yup.string().required("Required").matches(new RegExp(login), 'Login is not valid'),
+    password: yup.string().required("Required"),
+    login: yup.string().required("Required"),
 })
+
+export interface AuthenticationDto {
+    login: string
+    password: string
+}
 
 export default function SignIn() {
     const {t} = useTranslation()
-    const classes = useStyles()
     const dispatch = useDispatch()
-    const exp = useSelector((profile: IRootState) => profile.auth.exp)
+    const classes = useStyles()
     const initValues: AuthenticationDto = {
         login: '',
         password: ''
@@ -63,11 +66,37 @@ export default function SignIn() {
         validationSchema: vScheme,
         onSubmit(values: AuthenticationDto) {
 
-            if (exp !== undefined && Date.now() >= exp * 1000) {
-                localStorage.setItem('token', '')
-                dispatch({type: LOG_OUT, payload: ''})
+            if (values.login === 'admin'){
+                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'ADMIN' , id: 1}})
+                history.push('/base-logic-page')
+            }else if(values.login === 'student'){
+                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'STUDENT' , id: 2}})
+                history.push('/profile')
+            }else if(values.login === 'zav'){
+                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'STUDENT' , id: 2}})
+                history.push('/profile')
             }
-            dispatch({type: AUTHORIZATION, payload: values})
+            // axios.post('http://localhost:8080/diplom-web/login',
+            //     values,
+            //     {headers: {"Access-Control-Allow-Origin": "*"}})
+            //     .then(function (response) {
+            //         localStorage.setItem('role', response.data.user_role)
+            //         localStorage.setItem('userId', response.data.user_id)
+            //
+            //
+            //
+            //
+            //         // if(response.data.user_role === 'ADMIN'){
+            //         //     history.push('/base-logic-page')
+            //         // }else if (response.data.user_role === 'STUDENT'){
+            //         //     history.push('/profile')
+            //         // }
+            //
+            //
+            //     })
+            //     .catch(function (error) {
+            //         dispatch({type: SET_ALERT_MESSAGE_SUCCEED, payload: { message:  error.message, type: false}})
+            //     });
         },
     })
 

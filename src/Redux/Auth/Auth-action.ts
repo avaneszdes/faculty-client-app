@@ -21,4 +21,3 @@ export type AuthActionTypes =
     LogOut
     | AuthorizationSucceedAction
     | AuthorizationAction
-

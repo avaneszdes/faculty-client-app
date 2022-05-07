@@ -1,45 +1,55 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {IRootState} from "../../Redux/configureStore";
-import {GET_USER_BY_LOGIN_SUCCEED} from "../../Redux/User/User-constants";
-import {Button, Divider, Paper, Typography} from "@mui/material";
+import {EDIT_USER_SUCCEED, GET_USER_BY_LOGIN_SUCCEED} from "../../Redux/User/User-constants";
+import {Button, Divider, Paper, TextField, Typography} from "@mui/material";
 import {ProfileStyles} from "./ProfileStyles";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Profile() {
 
     const dispatch = useDispatch()
     const classes = ProfileStyles()
+    const [data, setData] = useState({showEditMode: false, email: ''})
     const userData = useSelector((rootState: IRootState) => rootState.user.user)
 
     useEffect(() => {
-        dispatch({
-            type: GET_USER_BY_LOGIN_SUCCEED, payload: {
-                id: 1,
-                name: "Владислав",
-                surname: "Аванесов",
-                middleName: "2",
-                username: "avaneszdes@gmail.com",
-                mail: '123123',
-                role: "ЗАВ КАФЕДРОЙ",
-                practiceId: 1,
-                groupId: 1,
-            }
-        })
+
+        if (userData?.mail !== '2') {
+            dispatch({
+                type: GET_USER_BY_LOGIN_SUCCEED, payload: {
+                    id: 1,
+                    name: "Яромир",
+                    surname: "Казаченко",
+                    middleName: "Владиславович",
+                    login: "казак@gmail.com",
+                    mail: '123123',
+                    role: "СТУДЕНТ",
+                    practiceId: 1,
+                    groupId: 1,
+                }
+
+            })
+        }
+
     }, []);
+
+
+    const updateUser = () => dispatch({type: EDIT_USER_SUCCEED, payload: {...userData, mail: data.email}})
 
     return (
         <Paper elevation={6}
-            style={{
-                width: '700px',
-                height: '600px',
-                borderRadius: '5px',
-                backgroundColor: '#bbeec6',
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
-            }}
+               style={{
+                   width: '800px',
+                   height: '600px',
+                   borderRadius: '5px',
+                   backgroundColor: '#bbeec6',
+                   position: 'absolute',
+                   left: '50%',
+                   top: '50%',
+                   transform: 'translate(-50%, -50%)'
+               }}
         >{userData &&
         <div>
             <Typography style={{margin: '5px'}} variant="h5" component="h2">
@@ -51,7 +61,7 @@ export default function Profile() {
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Фамилия:
                         </Typography>
-                        <Typography variant="h5" component="h2">
+                        <Typography style={{width: '350px'}} variant="h5" component="h2">
                             {userData?.surname}
                         </Typography>
                     </div>
@@ -60,7 +70,7 @@ export default function Profile() {
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Имя:
                         </Typography>
-                        <Typography variant="h5" component="h2">
+                        <Typography style={{width: '350px'}} variant="h5" component="h2">
                             {userData?.name}
                         </Typography>
                     </div>
@@ -69,7 +79,7 @@ export default function Profile() {
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Отчество:
                         </Typography>
-                        <Typography variant="h5" component="h2">
+                        <Typography style={{width: '350px'}} variant="h5" component="h2">
                             {userData?.middleName}
                         </Typography>
                     </div>
@@ -78,7 +88,7 @@ export default function Profile() {
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Логин:
                         </Typography>
-                        <Typography variant="h5" component="h2">
+                        <Typography style={{width: '350px'}} variant="h5" component="h2">
                             {userData?.login}
                         </Typography>
                     </div>
@@ -87,24 +97,56 @@ export default function Profile() {
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Почта:
                         </Typography>
-                        <Typography variant="h5" component="h2">
-                            {userData?.mail}
-                        </Typography>
-                        <Button className={classes.iconButton} variant={'outlined'}>
-                            <EditOutlinedIcon  />
-                        </Button>
+
+                        {!data.showEditMode &&
+                        <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
+                            <Typography style={{marginRight: '20px'}} variant="h5" component="h2">
+                                {userData?.mail}
+                            </Typography>
+                            <Button onClick={() => setData({...data, showEditMode: true})}
+                                    className={classes.iconButton} variant={'outlined'}>
+                                <EditOutlinedIcon/>
+                            </Button>
+                        </div>
+
+                        }
+
+                        {data.showEditMode &&
+                        <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
+                            <TextField
+                                value={data.email}
+                                style={{marginRight: '20px'}}
+                                size={'small'}
+                                placeholder={'Почта'}
+                                label={'Почта'}
+                                onChange={(e) => setData({...data, email: e.target.value})}
+                            />
+                            <Button onClick={() => {
+                                updateUser();
+                                setData({...data, showEditMode: false})
+                            }}
+                                    className={classes.iconButton} variant={'outlined'}>
+                                <AddIcon/>
+                            </Button>
+                        </div>
+
+                        }
+
                     </div>
                     <Divider/>
                     <div className={classes.profileItem}>
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
                             Пароль:
                         </Typography>
-                        <Typography variant="h5" component="h2">
-                            **********
-                        </Typography>
-                        <Button variant={'outlined'} className={classes.iconButton}>
-                            <EditOutlinedIcon/>
-                        </Button>
+                        <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
+                            <Typography style={{marginRight: '20px'}} variant="h5" component="h2">
+                                **********
+                            </Typography>
+                            <Button variant={'outlined'} className={classes.iconButton}>
+                                <EditOutlinedIcon/>
+                            </Button>
+                        </div>
+
                     </div>
                     <Divider/>
                 </div>
