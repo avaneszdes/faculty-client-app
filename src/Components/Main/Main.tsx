@@ -135,26 +135,22 @@ export default function Main() {
 
                 <Toolbar>
 
-                    {!auth.role &&
-                    <h5 className="fromLeft" onClick={() => logIn()}>
-                        {t('main.logIn')}
+
+
+                    {auth.role === 'ADMIN' && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />}
+                    {auth.role === 'ADMIN' && <h5 className="fromLeft" onClick={() => history.push('/base-logic-page')}>
+                        {t('main.basePage')}
                     </h5>}
 
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
-                    <h5 className="fromLeft" onClick={() => history.push('/base-logic-page')}>
-                        {t('main.basePage')}
-                    </h5>
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
-                    <h5 className="fromLeft" onClick={() => history.push('/profile')}>
-                        {t('main.personalAccount')}
-                    </h5>
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
 
-                    <h5 className="fromLeft" onClick={handleOpen}>
+
+
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />}
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&  <h5 className="fromLeft" onClick={handleOpen}>
                         {t('main.calendar')}
-                    </h5>
+                    </h5>}
 
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
+
                     <Modal
                         open={open}
                         onClose={handleClose}
@@ -166,12 +162,23 @@ export default function Main() {
                         </Box>
                     </Modal>
 
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <h5 className="fromLeft" onClick={() => history.push('/profile')}>
+                        {t('main.personalAccount')}
+                    </h5>}
+
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
                     {auth.role &&
                         <h5 className="fromLeft" onClick={() => logOut()}>
                             {t('main.logOut')}
                         </h5>
                     }
 
+                    {!auth.role &&
+                    <h5 className="fromLeft" onClick={() => logIn()}>
+                        {t('main.logIn')}
+                    </h5>}
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
                     <div>
                         <Button aria-controls="simple-menu" style={{all: 'unset'}}
                                 aria-haspopup="listbox" onClick={handleLanguageClick}>
