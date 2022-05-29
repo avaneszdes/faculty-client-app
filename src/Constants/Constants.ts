@@ -1,41 +1,41 @@
+export const host = 'https://docker-heroku-demo-01.herokuapp.com/';
+
 export default {
-    host: 'http://localhost:8080/',
-    authorize: 'dormitory-service/v1/authentication/authorize',
-    studentProfile: 'dormitory-service/v1/user/findByLogin/',
-    studentProfileById: 'dormitory-service/v1/user/',
-    studentProfileByLogin: 'dormitory-service/v1/user/login/',
-    updateStudentProfile: 'dormitory-service/v1/user/',
-    updateDormitory: 'dormitory-service/v1/dormitory',
-    getOccupancyDataByLogin: 'dormitory-service/v1/occupancies/active/userLogin/',
-    getAllOccupanciesByLogin: 'dormitory-service/v1/occupancies/userLogin/',
-    requestToChangePassword: 'dormitory-service/v1/user/changePasswordRequest/',
-    changePassword: 'dormitory-service/v1/user/changePassword',
-    getAllOccupancies: 'dormitory-service/v1/occupancies',
-    getAllDormitories: 'dormitory-service/v1/dormitory',
-    getReprimandsById: 'dormitory-service/v1/reprimands/userId/',
-    deleteReprimandById: 'dormitory-service/v1/reprimands/',
-    getDormitoryByNumber: 'dormitory-service/v1/dormitory/number/',
-    getStudentDebtsById: 'dormitory-service/v1/payments/totalDebts/',
-    addStudentToRoom: 'dormitory-service/v1/occupancies',
-    createReprimand: 'dormitory-service/v1/reprimands',
-    addRoomToDormitory: 'dormitory-service/v1/dormitory/',
-    addDormitory: 'dormitory-service/v1/dormitory',
-    deleteRoomFromDormitory: 'dormitory-service/v1/room/changeStatus/',
-    deleteStudent: 'dormitory-service/v1/user/',
-    deleteStudentFromRoom: 'dormitory-service/v1/occupancies/',
-    deleteDormitory: 'dormitory-service/v1/dormitory/',
-    payment: 'dormitory-service/v1/payments/userId/',
-    uploadReceipt: 'dormitory-service/v1/payments/',
-    declinePayment: 'dormitory-service/v1/payments/decline/',
-    approvePayment: 'dormitory-service/v1/payments/approve/',
-    getAllUsers: 'dormitory-service/v1/user',
-    getDormitoryById: 'dormitory-service/v1/dormitory/',
-    registerUser: 'dormitory-service/v1/user/registration?role=',
+    authorize: host + 'login',
+    getEvents: host + 'eventCalendar/getEventsByPracticeIds?practiceId=' ,
+    deleteEvent: host +  'eventCalendar/deleteEvent',
+    addEvent:  host +  "eventCalendar/addEvent",
+    getPracticeByUserId: host +  "practice/getPracticeByUserId?userId=",
+    addGroup: host +  "admin/addGroup",
+    getCommentByUserId: host +  "admin/getComments?userId=",
+    sendComment: host +  "admin/addComment?userId=",
+    getUsersByGroup: host +  "admin/getUsersByGroup?code=",
+    getUserById: host +  "admin/getUserById?userId=",
+    updateEvent: host +  "eventCalendar/updateEvent",
+    createUser: host +  "admin/addUser",
+    deleteUser: host +  "admin/deleteUser",
+    updateUser: host +  "admin/updateUser",
+    importStudents: host +  "importStudents?groupId=",
+    getTeachers: host +  "admin/teachers",
+    uploadFile: host +  "fileupload?practiceId=",
+    deleteDocument: host +  "deleteFile/",
+    getDocumentsByUserId: host +  "getFilesByUserId/",
+    getDocumentTypes: host +  "admin/doctypes",
+    updateFileStatus: host +  "updateDocumentStatus",
+    addDocumentType: host +  "admin/addDoctype",
+    deleteDocumentType: host +  "admin/deleteDoctype",
+    addPracticeLocation: host +  "admin/addLocation",
+    updatePracticeLocation: host +  "admin/updateLocation",
+    addPractice: host +  "practice/addPractice",
+    deletePractice: host +  "practice/deletePractice",
+    getAllPractices: host +  "practice/getPractices",
+    getTeacherForStudent: host +  "admin/getTeacher?userId=",
 }
 
-export const roles = {
-    student: 'ROLE_STUDENT',
-    accountant: 'ROLE_ACCOUNTANT',
-    administrator: 'ROLE_ADMINISTRATOR',
-    dean: 'ROLE_DEAN'
-}
+
+export const documentStatuses = ['На рассмотрении', 'Принят', 'Отклонен' ]
+
+export const roles = ['АДМИНИСТРАТОР', 'СТУДЕНТ', 'ЗАВКАФЕДРОЙ', 'ОРГАНИЗАТОР ПРАКТИКИ', 'РУКОВОДИТЕЛЬ ПРАКТИКИ']
+export const practicePlaceStatuses = ['На рассмотрении', 'Принят', 'Отклонен']
+
+// не предоставлен, на рассмотрении, утвержден

@@ -1,14 +1,14 @@
 import { makeStyles} from "@material-ui/core/styles";
 
 
-export const useProfileStyles = makeStyles((theme) => ({
+export const useProfileStyles = makeStyles(() => ({
     listItem: {
-        height: '20px',
-        margin: '5px',
+        height: '25px',
+        margin: '15px',
         border: 'solid 0.5px',
         padding: '5px',
         borderRadius: '5px',
-        width: '24%',
+        width: '32%',
         textAlign: "center",
     },
     listItemError: {
@@ -35,7 +35,7 @@ export const useProfileStyles = makeStyles((theme) => ({
         borderLeft: 'solid 0.5px',
         borderRight: 'solid 0.5px',
         padding: '5px',
-        width: '24%',
+        width: '32%',
         textAlign: "center",
     },
     listItemPaper: {

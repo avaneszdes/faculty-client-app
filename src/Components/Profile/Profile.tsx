@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {IRootState} from "../../Redux/configureStore";
-import {EDIT_USER_SUCCEED, GET_USER_BY_LOGIN_SUCCEED} from "../../Redux/User/User-constants";
+import {EDIT_USER_SUCCEED} from "../../Redux/User/User-constants";
 import {Button, Divider, Paper, TextField, Typography} from "@mui/material";
 import {ProfileStyles} from "./ProfileStyles";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AddIcon from '@mui/icons-material/Add';
+import AlertComponent from "../Alerts/SuccessAlert";
 
 export default function Profile() {
 
@@ -13,28 +14,6 @@ export default function Profile() {
     const classes = ProfileStyles()
     const [data, setData] = useState({showEditMode: false, email: ''})
     const userData = useSelector((rootState: IRootState) => rootState.user.user)
-
-    useEffect(() => {
-
-        if (userData?.mail !== '2') {
-            dispatch({
-                type: GET_USER_BY_LOGIN_SUCCEED, payload: {
-                    id: 1,
-                    name: "Яромир",
-                    surname: "Казаченко",
-                    middleName: "Владиславович",
-                    login: "казак@gmail.com",
-                    mail: '123123',
-                    role: "СТУДЕНТ",
-                    practiceId: 1,
-                    groupId: 1,
-                }
-
-            })
-        }
-
-    }, []);
-
 
     const updateUser = () => dispatch({type: EDIT_USER_SUCCEED, payload: {...userData, mail: data.email}})
 
@@ -52,8 +31,9 @@ export default function Profile() {
                }}
         >{userData &&
         <div>
+            <AlertComponent/>
             <Typography style={{margin: '5px'}} variant="h5" component="h2">
-                {userData.role}
+                {localStorage.getItem('role')}
             </Typography>
             <div style={{display: 'flex', marginTop: '15%', justifyContent: 'center'}}>
                 <div>

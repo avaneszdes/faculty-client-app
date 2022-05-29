@@ -4,6 +4,8 @@ import {
     CREATE_EVENT_SUCCEED,
     DELETE_EVENT,
     DELETE_EVENT_SUCCEED,
+    GET_ALL_EVENTS_BY_USER_ID,
+    GET_ALL_EVENTS_BY_USER_ID_SUCCEED,
     SET_TEMP_EVENT,
     UPDATE_EVENT,
     UPDATE_EVENT_SUCCEED
@@ -50,9 +52,21 @@ export interface UpdDeleteEventSucceed {
     payload: number
 }
 
+export interface GetAllEventsById {
+    type: typeof GET_ALL_EVENTS_BY_USER_ID,
+    payload: number
+}
+
+export interface GetAllEventsByIdSucceed {
+    type: typeof GET_ALL_EVENTS_BY_USER_ID_SUCCEED,
+    payload: BaseCalendarEvent[]
+}
+
 
 export type CalendarActionTypes =
     CreateEvent
+    | GetAllEventsById
+    | GetAllEventsByIdSucceed
     | CreateEventSucceed
     | SetTempEvent
     | UpdateEvent

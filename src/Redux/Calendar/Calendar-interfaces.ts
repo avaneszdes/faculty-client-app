@@ -15,6 +15,8 @@ export interface EventToCreate {
     summary: string,
     color: string,
     calendarId: string
+    userId?: string | number,
+    practiceId?: string | number
 }
 
 export interface ICalendarState{

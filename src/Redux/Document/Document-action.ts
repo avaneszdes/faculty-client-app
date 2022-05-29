@@ -1,21 +1,21 @@
 import {
     ADD_DOCUMENT_TYPE,
-    ADD_DOCUMENT_TYPE_SUCCEED,
+    ADD_DOCUMENT_TYPE_SUCCEED, DELETE_DOCUMENT_BY_ID, DELETE_DOCUMENT_BY_ID_SUCCEED,
     DELETE_DOCUMENT_TYPE,
     DELETE_DOCUMENT_TYPE_SUCCEED,
     GET_DOCUMENT_TYPES,
     GET_DOCUMENT_TYPES_SUCCEED,
     GET_DOCUMENTS_BY_USER_ID,
-    GET_DOCUMENTS_BY_USER_ID_SUCCEED,
+    GET_DOCUMENTS_BY_USER_ID_SUCCEED, UPDATE_FILE_STATUS_BY_ID,
     UPLOAD_DOCUMENT,
     UPLOAD_DOCUMENT_SUCCEED
 } from "./Document-constants";
-import {IDocument} from "./Document-interfaces";
+import {IDocument, IDocumentUpload} from "./Document-interfaces";
 
 
 export interface UploadDocument {
     type: typeof UPLOAD_DOCUMENT,
-    payload: FormData
+    payload: IDocumentUpload
 }
 
 export interface UploadDocumentSucceed {
@@ -30,7 +30,7 @@ export interface GetDocumentsByUserId {
 
 export interface GetDocumentsByUserIdSucceed {
     type: typeof GET_DOCUMENTS_BY_USER_ID_SUCCEED,
-    payload: IDocument
+    payload: IDocument[]
 }
 
 export interface GetDocumentTypes {
@@ -63,9 +63,25 @@ export interface DeleteDocumentTypeSucceed {
     payload: number
 }
 
+export interface DeleteDocumentById {
+    type: typeof DELETE_DOCUMENT_BY_ID,
+    payload: number
+}
+
+export interface DeleteDocumentByIdSucceed {
+    type: typeof DELETE_DOCUMENT_BY_ID_SUCCEED,
+    payload: number
+}
+
+export interface UpdateFileStatusById {
+    type: typeof UPDATE_FILE_STATUS_BY_ID,
+    payload: {id: number, status: string}
+}
 
 export type DocumentActionTypes =
     UploadDocument
+    | DeleteDocumentById
+    | DeleteDocumentByIdSucceed
     | DeleteDocumentType
     | DeleteDocumentTypeSucceed
     | AddDocumentType
@@ -75,4 +91,5 @@ export type DocumentActionTypes =
     | UploadDocumentSucceed
     | GetDocumentsByUserId
     | GetDocumentsByUserIdSucceed
+    | UpdateFileStatusById
 

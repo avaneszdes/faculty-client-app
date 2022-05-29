@@ -12,7 +12,7 @@ import {TextField, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {IRootState} from "../../Redux/configureStore";
 import {HexColorPicker} from "react-colorful";
-import {getFullDate} from "../../Global";
+import {getFullDate} from "../../Constants/Global";
 import {DateTimePicker} from "@mui/x-date-pickers";
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";

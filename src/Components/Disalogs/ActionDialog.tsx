@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
+import { Typography } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -27,7 +28,6 @@ interface Props{
 export default function ActionDialog({answer,title, text, open}: Props) {
 
     return (
-        <div>
             <Dialog
                 BackdropProps={{
                     style: {
@@ -44,7 +44,7 @@ export default function ActionDialog({answer,title, text, open}: Props) {
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {text}
+                        <Typography component={'span'} variant={'body2'}>{text}</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -52,6 +52,5 @@ export default function ActionDialog({answer,title, text, open}: Props) {
                     <Button onClick={() => answer(true)}>Да</Button>
                 </DialogActions>
             </Dialog>
-        </div>
     );
 }

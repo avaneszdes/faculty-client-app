@@ -1,16 +1,25 @@
 export interface IDocument {
-    id: number
-    document: FormData
-    documentType: IDocumentType
+    id: number,
+    filename: string,
+    userId: number,
+    status: string,
+    practiceId: number
+}
+
+export interface IDocumentUpload {
+    userId: number
+    file: FormData
+    docTypeId: number
+    practiceId: number
 }
 
 export interface IDocumentType {
     id: number
-    documentType: string
+    type: string
 }
 
 export interface IDocumentState {
     documents: IDocument[] | []
-    document: FormData | null
+    document: IDocumentUpload | IDocument | null
     documentTypes: IDocumentType[] | []
 }

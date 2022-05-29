@@ -1,11 +1,12 @@
 ﻿import {IDocumentState, IDocumentType} from "./Document-interfaces";
 import {DocumentActionTypes} from "./Document-action";
 import {
+    ADD_DOCUMENT_TYPE_SUCCEED,
+    DELETE_DOCUMENT_BY_ID_SUCCEED,
+    DELETE_DOCUMENT_TYPE_SUCCEED,
     GET_DOCUMENT_TYPES_SUCCEED,
     GET_DOCUMENTS_BY_USER_ID_SUCCEED,
-    UPLOAD_DOCUMENT_SUCCEED,
-    ADD_DOCUMENT_TYPE_SUCCEED,
-    DELETE_DOCUMENT_TYPE_SUCCEED
+    UPLOAD_DOCUMENT_SUCCEED
 } from "./Document-constants";
 
 const initialState: IDocumentState = {
@@ -21,13 +22,16 @@ const document = (state = initialState, action: DocumentActionTypes) => {
         case GET_DOCUMENTS_BY_USER_ID_SUCCEED:
             return {...state, documents: action.payload}
 
+        case DELETE_DOCUMENT_BY_ID_SUCCEED:
+            return {...state, documents: state.documents.filter(x => x.id !== action.payload)}
+
         case UPLOAD_DOCUMENT_SUCCEED:
-            return {...state, document: action.payload}
+            return {...state, documents: [...state.documents, action.payload]}
 
         case GET_DOCUMENT_TYPES_SUCCEED:
             return {
                 ...state,
-                documentTypes: [{id: 1, documentType: 'Отчет практики'}, {id: 2, documentType: 'Дневник Практики'}]
+                documentTypes: action.payload
             }
 
         case ADD_DOCUMENT_TYPE_SUCCEED:

@@ -7,16 +7,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import * as React from "react";
 import {useState} from "react";
-import {IGroup, IStudent} from "../../Redux/Faculty/Faculty-interfaces";
 
 
 interface Props {
     addGroup: (group: string) => void
-    addStudentToList: (student: IStudent) => void
-    currentGroup: IGroup | null
 }
 
-export default function AddGroupAccordion ({addGroup,addStudentToList, currentGroup}: Props){
+export default function AddGroupAccordion ({addGroup}: Props){
 
     const [group,setGroup] = useState('')
 
@@ -26,7 +23,7 @@ export default function AddGroupAccordion ({addGroup,addStudentToList, currentGr
             aria-controls="panel2a-content"
             id="panel2a-header"
         >
-            <Typography>Добавить группу</Typography>
+            <Typography component={'h2'} variant={'h6'}>Добавить группу</Typography>
         </AccordionSummary>
         <AccordionDetails>
             <div>
@@ -41,12 +38,10 @@ export default function AddGroupAccordion ({addGroup,addStudentToList, currentGr
                 />
 
                 <Button variant={'outlined'} onClick={() => addGroup(group)} style={{marginLeft: '1%'}}>
-                    <Typography>Создать</Typography>
+                    <Typography component={'span'} variant={'body2'}>Создать</Typography>
                     <AddOutlinedIcon/>
                 </Button>
-
             </div>
-
         </AccordionDetails>
     </Accordion>
 }

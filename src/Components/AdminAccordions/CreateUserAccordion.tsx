@@ -4,24 +4,29 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import * as React from "react";
+import {useState} from "react";
 import {Button, Menu, MenuItem, TextField} from "@mui/material";
 import {useFormik} from "formik";
 import * as yup from "yup";
-import {useState} from "react";
 import {ICreateUserInterface} from "../../Redux/User/User-interfaces";
+import {convertRole} from "../../Constants/Global";
+import {roles} from "../../Constants/Constants";
 
 const initValues = {
     name: '',
     surname: '',
     middleName: '',
+    password: '12345678',
     login: '',
-    role: ''
+    role: '',
+    teacherId: 0,
+    practiceId: 0
 }
 
 const vScheme = yup.object().shape({
     name: yup.string().required("Required"),
     surname: yup.string().required("Required"),
-    username: yup.string().required("Required"),
+    login: yup.string().required("Required"),
 })
 
 
@@ -33,13 +38,13 @@ export default function CreateUserAccordion({createUser}: Props) {
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const [role,setRole] = useState('')
+    const [params,setParams] = useState({role: '', practiceId: 0})
 
     const formik = useFormik({
         initialValues: initValues,
         validationSchema: vScheme,
         onSubmit(values) {
-            const user = {...values, role: role}
+            const user = {...values, role: params.role, groupCode: "", practiceId: params.practiceId === 0 ? null : params.practiceId, teacherId: values.teacherId}
             createUser(user)
             setAnchorEl(null)
         }
@@ -55,7 +60,7 @@ export default function CreateUserAccordion({createUser}: Props) {
 
     const setRoleAndClose = (role: string) => {
         setAnchorEl(null)
-        setRole(role)
+        setParams({...params, role: role})
     }
 
 
@@ -65,7 +70,7 @@ export default function CreateUserAccordion({createUser}: Props) {
             aria-controls="panel2a-content"
             id="panel2a-header"
         >
-            <Typography>Содание пользователя</Typography>
+            <Typography component={'h2'} variant={'h6'}>Содание пользователя</Typography>
         </AccordionSummary>
         <AccordionDetails>
             <form style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}
@@ -76,7 +81,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Фамилия'}
                     name='surname'
                     id='surname'
-                    style={{width: '16%'}}
+                    style={{width: '14%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.surname && Boolean(formik.errors.surname)}
                     value={formik.values.surname}
@@ -88,7 +93,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Имя'}
                     name='name'
                     id='name'
-                    style={{width: '16%'}}
+                    style={{width: '14%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.name && Boolean(formik.errors.name)}
                     value={formik.values.name}
@@ -100,7 +105,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Отчество'}
                     name='middleName'
                     id='middleName'
-                    style={{width: '16%'}}
+                    style={{width: '14%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.middleName && Boolean(formik.errors.middleName)}
                     value={formik.values.middleName}
@@ -112,16 +117,29 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Логин'}
                     name='login'
                     id='login'
-                    style={{width: '16%'}}
+                    style={{width: '14%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.login && Boolean(formik.errors.login)}
                     value={formik.values.login}
                     helperText={formik.touched.login && formik.errors.login}
                 />
+                <TextField
+                    size={'small'}
+                    placeholder={'Пароль'}
+                    label={'Пароль'}
+                    name='password'
+                    id='password'
+                    style={{width: '14%'}}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    value={formik.values.password}
+                    helperText={formik.touched.password && formik.errors.password}
+                />
 
                 <div>
                     <Button
                         variant={'outlined'}
+                        style={{height: '40px'}}
                         id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
@@ -139,14 +157,13 @@ export default function CreateUserAccordion({createUser}: Props) {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={() => setRoleAndClose('СТУДЕНТ')}>СТУДЕНТ</MenuItem>
-                        <MenuItem onClick={() => setRoleAndClose('ЗАВ КАФЕДРОЙ')}>ЗАВ КАФЕДРОЙ</MenuItem>
-                        <MenuItem onClick={() => setRoleAndClose('КТО-ТО')}>КТО-ТО</MenuItem>
+                        {roles.map(x => <MenuItem key={x} onClick={() => setRoleAndClose(convertRole(x))}>{x}</MenuItem>)}
                     </Menu>
                 </div>
 
+                {/*<PracticeMenu isSet={params.practiceId > 0} setPractice={(practiceId) => setParams({...params, practiceId: practiceId})}/>*/}
 
-                <Button variant={'outlined'} type="submit">
+                <Button variant={'contained'} type="submit">
                     Создать пользователя
                 </Button>
             </form>

@@ -1,13 +1,13 @@
-import Kalend, {CalendarEvent, CalendarView, OnEventClickData, OnNewEventClickData, OnPageChangeData,} from 'kalend';
+import Kalend, {CalendarEvent, CalendarView, OnEventClickData, OnNewEventClickData,} from 'kalend';
 import 'kalend/dist/styles/index.css';
 import {useDispatch, useSelector} from "react-redux";
 import {IRootState} from "../../Redux/configureStore";
 import {
     CLEAR_TEMP_EVENT,
-    CREATE_EVENT_SUCCEED,
-    DELETE_EVENT_SUCCEED,
+    CREATE_EVENT,
+    DELETE_EVENT,
     SET_TEMP_EVENT,
-    UPDATE_EVENT_SUCCEED
+    UPDATE_EVENT,
 } from "../../Redux/Calendar/Calendar-constants";
 import {useState} from "react";
 import CreateEventDialog from "./CreateEventDialog";
@@ -17,6 +17,7 @@ import DetailedInformationWithUpdateDialog from "./DetailedInformationWithUpdate
 export default function Calendar() {
 
     const calendar = useSelector((rootState: IRootState) => rootState.calendar)
+    const user = useSelector((rootState: IRootState) => rootState.user.user)
     const dispatch = useDispatch()
     const [eventPopup, setEventPopUp] = useState({createPopUpOpen: false, editPopUpOpen: false})
 
@@ -27,7 +28,9 @@ export default function Calendar() {
             timezoneStartAt: 'Europe/Berlin', // optional
             summary: 'new Event',
             color: 'red',
-            calendarId: 'work'
+            calendarId: 'work',
+            practiceId: user?.practiceId,
+            userId: user?.id
         }
 
         dispatch({type: SET_TEMP_EVENT, payload: newEvent})
@@ -36,17 +39,18 @@ export default function Calendar() {
 
     const createEvent = (data: EventToCreate) => {
         const event: EventToCreate = calendar.currentEvent!
-        const newEvent: BaseCalendarEvent = {
-            id: Math.floor(Math.random() * 1000) + 1,
-            color: data.color === ''? 'green' : data.color,
+        const newEvent: EventToCreate = {
+            color: data.color === '' ? 'green' : data.color,
             startAt: event.startAt,
             endAt: event.endAt,
             calendarId: event.calendarId,
             summary: data.summary,
-            timezoneStartAt: event.timezoneStartAt
+            timezoneStartAt: event.timezoneStartAt,
+            practiceId: user?.practiceId ?? 1,
+            userId: user?.id
         }
 
-        dispatch({type: CREATE_EVENT_SUCCEED, payload: newEvent})
+        dispatch({type: CREATE_EVENT, payload: newEvent})
         dispatch({type: CLEAR_TEMP_EVENT, payload: null})
     }
 
@@ -62,11 +66,11 @@ export default function Calendar() {
 
     const deleteEvent = (id: number) => {
         setEventPopUp({...eventPopup, editPopUpOpen: false, createPopUpOpen: false})
-        dispatch({type: DELETE_EVENT_SUCCEED, payload: id})
+        dispatch({type: DELETE_EVENT, payload: id})
     }
 
     const updateEvent = (event: BaseCalendarEvent) => {
-        dispatch({type: UPDATE_EVENT_SUCCEED, payload: event})
+        dispatch({type: UPDATE_EVENT, payload: event})
     }
 
     const onDragged = (prevEvent: CalendarEvent, updatedEvent: CalendarEvent, events: any) => {
@@ -80,7 +84,7 @@ export default function Calendar() {
             timezoneStartAt: 'Europe/Minsk'
         }
 
-        dispatch({type: UPDATE_EVENT_SUCCEED, payload: event})
+        dispatch({type: UPDATE_EVENT, payload: event})
     }
 
     return (

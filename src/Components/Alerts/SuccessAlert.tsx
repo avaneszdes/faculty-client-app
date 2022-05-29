@@ -6,13 +6,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import {AlertInterface} from "../../Redux/Alert/Alert-interfaces";
 import {CLEAR_ALERT_MESSAGE_SUCCEED} from "../../Redux/Alert/Alert-constants";
+import {Snackbar, Stack } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         '& > * + *': {
-            marginTop: theme.spacing(2),
-            marginBottom: '10px'
+            margin: theme.spacing(10),
+
         },
     },
 }));
@@ -27,22 +28,30 @@ const AlertComponent = () => {
 
     return (
         <div className={classes.root}>
-            <Collapse in={Boolean(alert.message)}>
-                <Alert variant="outlined"
-                       severity={alertSeverity}
-                       onClose={() => {
-                           dispatch({
-                               type: CLEAR_ALERT_MESSAGE_SUCCEED,
-                               payload:
-                                   {
-                                       message: '',
-                                       type: alertSeverity === "success"
-                                   }
-                           })
-                       }}>
+            <Snackbar open={Boolean(alert.message)} autoHideDuration={6000} onClose={() => {
+                dispatch({
+                    type: CLEAR_ALERT_MESSAGE_SUCCEED,
+                    payload:
+                        {
+                            message: '',
+                            type: alertSeverity === "success"
+                        }
+                })
+            }}>
+                <Alert onClose={() => {
+                    dispatch({
+                        type: CLEAR_ALERT_MESSAGE_SUCCEED,
+                        payload:
+                            {
+                                message: '',
+                                type: alertSeverity === "success"
+                            }
+                    })
+                }} severity={alertSeverity} >
                     {alert.message}
                 </Alert>
-            </Collapse>
+            </Snackbar>
+
         </div>
     );
 }

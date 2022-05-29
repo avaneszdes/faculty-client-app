@@ -13,11 +13,12 @@ import './main.css'
 import {IRootState} from "../../Redux/configureStore";
 import {useDispatch, useSelector} from "react-redux";
 import logoBntu from '../../images/LogoBntu2.png'
-import BaseLogicPage from "../BasePage/BaseLogicPage";
 import {Box, Divider, Modal} from "@mui/material";
 import Calendar from "../Calendar/Calendar";
 import {LOG_OUT} from "../../Redux/Auth/Auth-constants";
 import Profile from "../Profile/Profile";
+import StudentBasePage from "../StudentBasePage/StudentBasePage";
+import AdminBasePage from "../AdminBasePage/AdminBasePage";
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -102,10 +103,9 @@ export default function Main() {
     }
 
     const logIn = () => {
-        console.log(auth.role)
-        if(auth.role === 'ADMIN'){
+        if (auth.role === 'ADMIN') {
             history.push('/base-logic-page')
-        }else if (auth.role === 'STUDENT'){
+        } else if (auth.role === 'STUDENT') {
             history.push('/profile')
         }
 
@@ -136,17 +136,20 @@ export default function Main() {
                 <Toolbar>
 
 
-
-                    {auth.role === 'ADMIN' && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />}
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
                     {auth.role === 'ADMIN' && <h5 className="fromLeft" onClick={() => history.push('/base-logic-page')}>
                         {t('main.basePage')}
                     </h5>}
 
+                    {auth.role === 'STUDENT' && <h5 className="fromLeft" onClick={() => history.push('/student-base-logic-page')}>
+                        {t('main.basePage')}
+                    </h5>}
 
 
-
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />}
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&  <h5 className="fromLeft" onClick={handleOpen}>
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                    <h5 className="fromLeft" onClick={handleOpen}>
                         {t('main.calendar')}
                     </h5>}
 
@@ -162,23 +165,25 @@ export default function Main() {
                         </Box>
                     </Modal>
 
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') && <h5 className="fromLeft" onClick={() => history.push('/profile')}>
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
+                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                    <h5 className="fromLeft" onClick={() => history.push('/profile')}>
                         {t('main.personalAccount')}
                     </h5>}
 
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
                     {auth.role &&
-                        <h5 className="fromLeft" onClick={() => logOut()}>
-                            {t('main.logOut')}
-                        </h5>
+                    <h5 className="fromLeft" onClick={() => logOut()}>
+                        {t('main.logOut')}
+                    </h5>
                     }
 
                     {!auth.role &&
                     <h5 className="fromLeft" onClick={() => logIn()}>
                         {t('main.logIn')}
                     </h5>}
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}} />
+                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
                     <div>
                         <Button aria-controls="simple-menu" style={{all: 'unset'}}
                                 aria-haspopup="listbox" onClick={handleLanguageClick}>
@@ -201,7 +206,8 @@ export default function Main() {
 
             <Routes>
                 <Route path="/" element={<Authorization/>}/>
-                <Route path="/base-logic-page" element={<BaseLogicPage/>}/>
+                <Route path="/base-logic-page" element={<AdminBasePage/>}/>
+                <Route path="/student-base-logic-page" element={<StudentBasePage/>}/>
                 <Route path="/profile" element={<Profile/>}/>
             </Routes>
         </div>

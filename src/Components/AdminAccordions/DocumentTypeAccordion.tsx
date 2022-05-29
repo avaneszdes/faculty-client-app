@@ -21,27 +21,27 @@ export default function DocumentTypeAccordion({deleteDocumentType, addDocumentTy
     const [documentTypeText, setDocumentTypeText] = useState('')
 
 
-    return <Accordion style={{backgroundColor: '#dff8df'}}>
+    return <Accordion style={{backgroundColor: '#f3f8df'}}>
         <AccordionSummary
             expandIcon={<ExpandMoreIcon/>}
             aria-controls="panel2a-content"
             id="panel2a-header"
         >
-            <Typography>Типы документов</Typography>
+            <Typography component={'h2'} variant={'h6'}>Типы документов</Typography>
         </AccordionSummary>
         <AccordionDetails>
 
-            <div>
+            {documentTypes && <div>
                 {documentTypes.map((x, index) =>
                     <Button onClick={() => deleteDocumentType(x.id)}
                             style={{marginLeft: '5px'}}
                             variant={'contained'}
                             key={index}
                             endIcon={<DeleteForeverIcon/>}>
-                        <Typography>{x.documentType}</Typography>
+                        <Typography component={'span'} variant={'body2'}>{x.type}</Typography>
                     </Button>
                 )}
-            </div>
+            </div>}
 
             <div>
 
@@ -67,7 +67,7 @@ export default function DocumentTypeAccordion({deleteDocumentType, addDocumentTy
                         onChange={(e) => setDocumentTypeText(e.target.value)}
                     />
                     <Button variant={'outlined'} onClick={() => {
-                        addDocumentType({id: Math.random(), documentType: documentTypeText});
+                        addDocumentType({id: Math.random(), type: documentTypeText});
                         setIsVisibleTypeForm(false)
                     }}
                     >

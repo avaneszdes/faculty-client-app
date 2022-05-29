@@ -1,52 +1,57 @@
 import {Button, TextField} from "@mui/material";
 import {useFormik} from "formik";
 import * as React from "react";
+import { useState } from "react";
 import * as yup from "yup";
-import {IStudent} from "../../Redux/Faculty/Faculty-interfaces";
-
+import {ICreateUserInterface} from "../../Redux/User/User-interfaces";
+import PracticeMenu from "../AdminBasePage/PracticeMenu";
+import TeacherMenu from "../AdminBasePage/TeacherMenu";
 
 interface Props {
-    addStudent: (arg: IStudent) => void
-    groupId: number
+    addStudent: (arg: ICreateUserInterface) => void
 }
 
-const initValues: IStudent = {
-    id: 0,
+const initValues: ICreateUserInterface = {
     name: '',
     surname: '',
     middleName: '',
-    username: '',
+    login: '',
     password: '',
-    practiceId: 0,
-    groupId: 0
-
+    role: 'STUDENT',
+    groupCode: '',
+    teacherId: 0,
+    practiceId: 0
 }
 
 const vScheme = yup.object().shape({
     name: yup.string().required("Required"),
     surname: yup.string().required("Required"),
-    username: yup.string().required("Required"),
+    login: yup.string().required("Required"),
     password: yup.string().required("Required"),
 })
 
-export default function AddStudentForm({addStudent, groupId}: Props) {
+export default function AddStudentForm({addStudent}: Props) {
+
+    const [practiceId, usePracticeId] = useState(0)
+    const [teacherId, useTeacherId] = useState(0)
 
     const formik = useFormik({
         initialValues: initValues,
         validationSchema: vScheme,
-        onSubmit(values: IStudent) {
-            addStudent({...values,groupId: groupId})
+        onSubmit(values: ICreateUserInterface) {
+            addStudent({...values, practiceId: practiceId, teacherId: teacherId})
         },
     })
 
-    return <form style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}} onSubmit={formik.handleSubmit}>
+    return <form style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}
+                 onSubmit={formik.handleSubmit}>
         <TextField
             size={'small'}
             placeholder={'Фамилия'}
             label={'Фамилия'}
             name='surname'
             id='surname'
-            style={{width: '16%'}}
+            style={{width: '13%'}}
             onChange={formik.handleChange}
             error={formik.touched.surname && Boolean(formik.errors.surname)}
             value={formik.values.surname}
@@ -58,7 +63,7 @@ export default function AddStudentForm({addStudent, groupId}: Props) {
             label={'Имя'}
             name='name'
             id='name'
-            style={{width: '16%'}}
+            style={{width: '13%'}}
             onChange={formik.handleChange}
             error={formik.touched.name && Boolean(formik.errors.name)}
             value={formik.values.name}
@@ -70,7 +75,7 @@ export default function AddStudentForm({addStudent, groupId}: Props) {
             label={'Отчество'}
             name='middleName'
             id='middleName'
-            style={{width: '16%'}}
+            style={{width: '13%'}}
             onChange={formik.handleChange}
             error={formik.touched.middleName && Boolean(formik.errors.middleName)}
             value={formik.values.middleName}
@@ -80,13 +85,13 @@ export default function AddStudentForm({addStudent, groupId}: Props) {
             size={'small'}
             placeholder={'Логин'}
             label={'Логин'}
-            name='username'
-            id='username'
-            style={{width: '16%'}}
+            name='login'
+            id='login'
+            style={{width: '13%'}}
             onChange={formik.handleChange}
-            error={formik.touched.username && Boolean(formik.errors.username)}
-            value={formik.values.username}
-            helperText={formik.touched.username && formik.errors.username}
+            error={formik.touched.login && Boolean(formik.errors.login)}
+            value={formik.values.login}
+            helperText={formik.touched.login && formik.errors.login}
         />
         <TextField
             size={'small'}
@@ -94,14 +99,16 @@ export default function AddStudentForm({addStudent, groupId}: Props) {
             label={'Пароль'}
             name='password'
             id='password'
-            style={{width: '16%'}}
+            style={{width: '13%'}}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             value={formik.values.password}
             helperText={formik.touched.password && formik.errors.password}
         />
 
-        <Button  variant={'outlined'} type="submit">
+        <PracticeMenu isSet={practiceId > 0} setPractice={usePracticeId}/>
+        <TeacherMenu isSet={teacherId > 0} setTeacher={useTeacherId}/>
+        <Button variant={'contained'} type="submit">
             Добавить студента
         </Button>
     </form>

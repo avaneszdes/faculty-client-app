@@ -9,7 +9,8 @@ import {TransitionProps} from '@mui/material/transitions';
 import {TextField} from "@mui/material";
 import {useFormik} from "formik";
 import * as yup from "yup";
-import {IStudent} from "../../Redux/Faculty/Faculty-interfaces";
+import {IUserInterface} from "../../Redux/User/User-interfaces";
+import { useEffect } from 'react';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -22,8 +23,8 @@ const Transition = React.forwardRef(function Transition(
 
 
 interface Props {
-    props: { student: IStudent, open: boolean }
-    modifyStudent: (student: IStudent) => void
+    props: { student: IUserInterface, open: boolean }
+    modifyStudent: (student: IUserInterface) => void
     setProps: (open: boolean) => void
 }
 
@@ -31,33 +32,31 @@ interface Props {
 const vScheme = yup.object().shape({
     name: yup.string().required("Required"),
     surname: yup.string().required("Required"),
-    username: yup.string().required("Required"),
+    login: yup.string().required("Required"),
     password: yup.string().required("Required"),
 })
 
 export default function ModifyStudentDialog({props, modifyStudent, setProps}: Props) {
 
-    const {student, open} = props
-    const initValues: IStudent = {
-        id: student.id,
-        name: student.name,
-        surname: student.surname,
-        middleName: student.middleName,
-        username: student.username,
-        password: student.password,
-        practiceId: student.practiceId,
-        groupId: student.groupId
 
-    }
+    const {student, open} = props
+
+    useEffect(() => {
+
+    }, []);
+
+
+    const initValues: IUserInterface = student
 
     const formik = useFormik({
         initialValues: initValues,
         validationSchema: vScheme,
-        onSubmit(values: IStudent) {
+        onSubmit(values: IUserInterface) {
             modifyStudent(values)
-
         },
     })
+
+
 
 
     return (
@@ -126,19 +125,36 @@ export default function ModifyStudentDialog({props, modifyStudent, setProps}: Pr
                                 size={'small'}
                                 placeholder={'Логин'}
                                 label={'Логин'}
-                                name='username'
-                                id='username'
+                                name='login'
+                                id='login'
                                 onChange={formik.handleChange}
-                                error={formik.touched.username && Boolean(formik.errors.username)}
-                                value={formik.values.username}
-                                helperText={formik.touched.username && formik.errors.username}
+                                error={formik.touched.login && Boolean(formik.errors.login)}
+                                value={formik.values.login}
+                                helperText={formik.touched.login && formik.errors.login}
                             />
+
+                            <TextField
+                                style={{margin: '10px'}}
+                                size={'small'}
+                                placeholder={'Пароль'}
+                                label={'Пароль'}
+                                name='password'
+                                id='password'
+                                onChange={formik.handleChange}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                value={formik.values.password}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
+
+
                         </div>
+
+
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={() => setProps(false)}>Отмена</Button>
-                        <Button type="submit">Редактировать</Button>
+                        <Button variant={'contained'} onClick={() => setProps(false)}>Отмена</Button>
+                        <Button variant={'contained'} type="submit">Редактировать</Button>
                     </DialogActions>
                 </form>
             </Dialog>

@@ -23,5 +23,5 @@ h5:hover:after {
 
 /*h5.fromRight:after{ transform-origin:100% 50%; }*/
 h5.fromLeft:after {
-    transform-origin: 0% 30%;
+    transform-origin: 0 30%;
 }

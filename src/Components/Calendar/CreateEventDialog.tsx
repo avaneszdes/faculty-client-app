@@ -41,7 +41,9 @@ export default function CreateEventDialog({open, close, createEvent}: Props) {
                 timezoneStartAt: 'Europe/Minsk',
                 summary: text,
                 color: color,
-                calendarId: 'work'
+                calendarId: 'work',
+                userId: '',
+                practiceId: ''
             })
 
             close(false)
@@ -78,7 +80,7 @@ export default function CreateEventDialog({open, close, createEvent}: Props) {
                     <TextField
                         multiline={true}
                         minRows={5}
-                        error={text === '' ? true : false}
+                        error={text === ''}
                         value={text}
                         style={{margin: '10px', width: '400px'}}
                         size={'small'}

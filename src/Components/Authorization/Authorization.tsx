@@ -3,6 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
+import links from '../../Constants/Constants'
 import Grid from '@material-ui/core/Grid';
 // @ts-ignore
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -16,8 +17,11 @@ import {useTranslation} from "react-i18next";
 import AlertComponent from "../Alerts/SuccessAlert";
 import { AUTHORIZATION_SUCCEED} from "../../Redux/Auth/Auth-constants";
 import axios from "axios";
-import {SET_ALERT_MESSAGE_SUCCEED} from "../../Redux/Alert/Alert-constants";
+import {LOADING_END_SUCCEED, LOADING_START_SUCCEED, SET_ALERT_MESSAGE_SUCCEED} from "../../Redux/Alert/Alert-constants";
 import history from "../History/history";
+import {GET_USER_BY_ID} from "../../Redux/User/User-constants";
+import {GET_ALL_EVENTS_BY_USER_ID} from "../../Redux/Calendar/Calendar-constants";
+import {GET_DOCUMENT_TYPES} from "../../Redux/Document/Document-constants";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,37 +70,33 @@ export default function SignIn() {
         validationSchema: vScheme,
         onSubmit(values: AuthenticationDto) {
 
-            if (values.login === 'admin'){
-                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'ADMIN' , id: 1}})
-                history.push('/base-logic-page')
-            }else if(values.login === 'student'){
-                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'STUDENT' , id: 2}})
-                history.push('/profile')
-            }else if(values.login === 'zav'){
-                dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: 'STUDENT' , id: 2}})
-                history.push('/profile')
-            }
-            // axios.post('http://localhost:8080/diplom-web/login',
-            //     values,
-            //     {headers: {"Access-Control-Allow-Origin": "*"}})
-            //     .then(function (response) {
-            //         localStorage.setItem('role', response.data.user_role)
-            //         localStorage.setItem('userId', response.data.user_id)
-            //
-            //
-            //
-            //
-            //         // if(response.data.user_role === 'ADMIN'){
-            //         //     history.push('/base-logic-page')
-            //         // }else if (response.data.user_role === 'STUDENT'){
-            //         //     history.push('/profile')
-            //         // }
-            //
-            //
-            //     })
-            //     .catch(function (error) {
-            //         dispatch({type: SET_ALERT_MESSAGE_SUCCEED, payload: { message:  error.message, type: false}})
-            //     });
+            dispatch({type: LOADING_START_SUCCEED, payload: true})
+            axios.post(links.authorize,
+                values,
+                {headers: {"Access-Control-Allow-Origin": "*"}})
+                .then(function (response) {
+                    localStorage.setItem('role', response.data.role)
+                    localStorage.setItem('userId', response.data.userId)
+
+                    if (response.data.role === 'ADMIN'){
+                        dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: response.data.role , id: response.data.userId}})
+                        history.push('/base-logic-page')
+                    }else if(response.data.role === 'STUDENT'){
+                        dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: response.data.role , id: response.data.userId}})
+                        history.push('/student-base-logic-page')
+                    }else if(response.data.role === 'zav'){
+                        dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: response.data.role , id: response.data.userId}})
+                        history.push('/profile')
+                    }
+                    dispatch({type: GET_DOCUMENT_TYPES, payload: ''})
+                    dispatch({type: GET_USER_BY_ID, payload: response.data.userId})
+                    dispatch({type: GET_ALL_EVENTS_BY_USER_ID, payload: response.data.userId})
+                })
+                .catch(function (error) {
+                    dispatch({type: SET_ALERT_MESSAGE_SUCCEED, payload: { message:  error.message, type: false}})
+                });
+            dispatch({type: LOADING_END_SUCCEED, payload: false})
+
         },
     })
 
