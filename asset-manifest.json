@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/faculty-client-app/static/css/main.f5892dec.css",
-    "main.js": "/faculty-client-app/static/js/main.53f95e60.js",
+    "main.js": "/faculty-client-app/static/js/main.dbcba96d.js",
     "static/media/LogoBntu2.png": "/faculty-client-app/static/media/LogoBntu2.d7fe680a1f7afa844221.png",
     "index.html": "/faculty-client-app/index.html",
     "static/media/getFetch.cjs": "/faculty-client-app/static/media/getFetch.c780682470504fffbd04.cjs",
     "main.f5892dec.css.map": "/faculty-client-app/static/css/main.f5892dec.css.map",
-    "main.53f95e60.js.map": "/faculty-client-app/static/js/main.53f95e60.js.map"
+    "main.dbcba96d.js.map": "/faculty-client-app/static/js/main.dbcba96d.js.map"
   },
   "entrypoints": [
     "static/css/main.f5892dec.css",
-    "static/js/main.53f95e60.js"
+    "static/js/main.dbcba96d.js"
   ]
 }
