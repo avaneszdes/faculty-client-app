@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import {useTranslation} from "react-i18next";
@@ -22,6 +22,8 @@ import history from "../History/history";
 import {GET_USER_BY_ID} from "../../Redux/User/User-constants";
 import {GET_ALL_EVENTS_BY_USER_ID} from "../../Redux/Calendar/Calendar-constants";
 import {GET_DOCUMENT_TYPES} from "../../Redux/Document/Document-constants";
+import {IRootState} from "../../Redux/configureStore";
+import Loader from "../Loading/Loader";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +60,8 @@ export default function SignIn() {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const classes = useStyles()
+    const loader = useSelector((x:IRootState) => x.alert.loading)
+
     const initValues: AuthenticationDto = {
         login: '',
         password: ''
@@ -107,6 +111,7 @@ export default function SignIn() {
     return (
         <Container component="main" maxWidth="xs" style={{marginTop: '70px'}}>
             <AlertComponent/>
+            <Loader hidden={loader}/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon/>
@@ -155,13 +160,6 @@ export default function SignIn() {
                     >
                         {t('authorization.signInButton')}
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" onClick={handleClose} variant="body2">
-                                {t('authorization.forgotPasswordLink')}
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
         </Container>

@@ -16,6 +16,7 @@ import {DELETE_DOCUMENT_BY_ID, UPLOAD_DOCUMENT} from "../../Redux/Document/Docum
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import axios from "axios";
+import Loader from "../Loading/Loader";
 
 const fileDownload = require('js-file-download');
 
@@ -35,6 +36,7 @@ export default function PracticeAccordion({addPracticeLocation, updatePracticeLo
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
 
     useEffect(() => {
         setPracticePlace(practiceLocation?.location ?? '')
@@ -66,7 +68,7 @@ export default function PracticeAccordion({addPracticeLocation, updatePracticeLo
             method: 'GET',
             responseType: 'blob', // Important
         }).then((response) => {
-            fileDownload(response.data, fileName.slice(62, fileName.length));
+            fileDownload(response.data, fileName);
         }).catch((response) => {
             alert(response);
         });
@@ -100,6 +102,7 @@ export default function PracticeAccordion({addPracticeLocation, updatePracticeLo
 
 
     return <Accordion style={{backgroundColor: '#dff8df'}}>
+
         <AccordionSummary
             expandIcon={<ExpandMoreIcon/>}
             aria-controls="panel2a-content"
@@ -202,23 +205,24 @@ export default function PracticeAccordion({addPracticeLocation, updatePracticeLo
                     {files.documents.map(x =>
                         <div key={x.id} style={{margin: '15px 0px 0px 20px ', display: 'flex', alignItems: 'center'}}>
                             <Paper style={{padding: '8px 15px 8px 15px'}} elevation={10}>
-                                {x.filename.length > 50 ? x.filename.slice(62, x.filename.length) : x.filename}
+                                {x.filename}
+                                <Button
+                                    style={{margin: '0px 15px 0px 15px'}}
+                                    variant={'contained'}
+                                    endIcon={<DownloadForOfflineRoundedIcon fontSize={'large'}/>}
+                                    onClick={() => downloadFile(x.id, x.filename)}
+                                >
+                                    Скачать
+                                </Button>
+                                <Button
+                                    onClick={() => deleteDocument(x.id)}
+                                    variant={'contained'}
+                                    endIcon={<DeleteForeverRoundedIcon fontSize={'large'}/>}
+                                >
+                                    Удалить
+                                </Button>
                             </Paper>
-                            <Button
-                                style={{margin: '0px 15px 0px 15px'}}
-                                variant={'contained'}
-                                endIcon={<DownloadForOfflineRoundedIcon fontSize={'large'}/>}
-                                onClick={() => downloadFile(x.id, x.filename)}
-                            >
-                                Скачать
-                            </Button>
-                            <Button
-                                onClick={() => deleteDocument(x.id)}
-                                variant={'contained'}
-                                endIcon={<DeleteForeverRoundedIcon fontSize={'large'}/>}
-                            >
-                                Удалить
-                            </Button>
+
 
                         </div>
                     )}

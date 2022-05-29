@@ -19,11 +19,7 @@ function* getTeachersWorker() {
         const response: AxiosResponse = yield call(axios.create().request, request)
         yield put({type: GET_TEACHERS_SUCCEED, payload: response.data.users})
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

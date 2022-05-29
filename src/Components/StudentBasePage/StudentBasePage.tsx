@@ -12,12 +12,14 @@ import {convertDocStatus} from "../../Constants/Global";
 import {GET_TEACHER_FOR_STUDENT} from "../../Redux/User/User-constants";
 import {GET_COMMENTS_BY_USER_ID} from "../../Redux/Faculty/Faculty-constants";
 import {GET_DOCUMENTS_BY_USER_ID} from "../../Redux/Document/Document-constants";
+import Loader from "../Loading/Loader";
 
 
 export default function StudentBasePage() {
 
     const practice = useSelector((root: IRootState) => root.practice)
     const user = useSelector((state: IRootState) => state.user.user)
+    const loader = useSelector((x:IRootState) => x.alert.loading)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -42,6 +44,7 @@ export default function StudentBasePage() {
     return (
         <div style={{marginTop: '60px'}}>
             <AlertComponent/>
+            <Loader hidden={loader} />
             <PracticeAccordion
                 addPracticeLocation={addPracticeLocation}
                 updatePracticeLocation={updatePracticeLocation}

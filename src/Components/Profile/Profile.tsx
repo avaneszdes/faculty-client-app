@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {IRootState} from "../../Redux/configureStore";
-import {EDIT_USER_SUCCEED} from "../../Redux/User/User-constants";
+import {EDIT_USER} from "../../Redux/User/User-constants";
 import {Button, Divider, Paper, TextField, Typography} from "@mui/material";
 import {ProfileStyles} from "./ProfileStyles";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -12,10 +12,10 @@ export default function Profile() {
 
     const dispatch = useDispatch()
     const classes = ProfileStyles()
-    const [data, setData] = useState({showEditMode: false, email: ''})
+    const [data, setData] = useState({showEditMode: false, password: ''})
     const userData = useSelector((rootState: IRootState) => rootState.user.user)
 
-    const updateUser = () => dispatch({type: EDIT_USER_SUCCEED, payload: {...userData, mail: data.email}})
+    const updateUser = () => dispatch({type: EDIT_USER, payload: {...userData, password: data.password}})
 
     return (
         <Paper elevation={6}
@@ -75,13 +75,13 @@ export default function Profile() {
                     <Divider/>
                     <div className={classes.profileItem}>
                         <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
-                            Почта:
+                            Пароль:
                         </Typography>
 
                         {!data.showEditMode &&
                         <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
                             <Typography style={{marginRight: '20px'}} variant="h5" component="h2">
-                                {userData?.mail}
+                                {userData?.password}
                             </Typography>
                             <Button onClick={() => setData({...data, showEditMode: true})}
                                     className={classes.iconButton} variant={'outlined'}>
@@ -94,12 +94,12 @@ export default function Profile() {
                         {data.showEditMode &&
                         <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
                             <TextField
-                                value={data.email}
+                                value={data.password}
                                 style={{marginRight: '20px'}}
                                 size={'small'}
-                                placeholder={'Почта'}
-                                label={'Почта'}
-                                onChange={(e) => setData({...data, email: e.target.value})}
+                                placeholder={'Пароль'}
+                                label={'Пароль'}
+                                onChange={(e) => setData({...data, password: e.target.value})}
                             />
                             <Button onClick={() => {
                                 updateUser();
@@ -111,21 +111,6 @@ export default function Profile() {
                         </div>
 
                         }
-
-                    </div>
-                    <Divider/>
-                    <div className={classes.profileItem}>
-                        <Typography className={classes.profileItemTemplate} variant="h5" component="h2">
-                            Пароль:
-                        </Typography>
-                        <div style={{display: 'flex', alignItems: 'center', width: '350px'}}>
-                            <Typography style={{marginRight: '20px'}} variant="h5" component="h2">
-                                **********
-                            </Typography>
-                            <Button variant={'outlined'} className={classes.iconButton}>
-                                <EditOutlinedIcon/>
-                            </Button>
-                        </div>
 
                     </div>
                     <Divider/>

@@ -57,13 +57,16 @@ export default function ModifyStudentsAccordion({
 
     const csvFileUpload = (e: any) => {
 
+        console.log(e.target.files)
         if (e.target.files[0] !== null) {
             const formData = new FormData();
             formData.append('file', e.target.files[0]);
             dispatch({
                 type: IMPORT_STUDENTS,
-                payload: {file: formData, groupId: 1, practiceId: practiceId}
+                payload: {file: formData, groupCode: group, practiceId: practiceId}
             })
+
+
         }
     }
 

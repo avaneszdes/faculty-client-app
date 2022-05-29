@@ -21,11 +21,7 @@ function* getDocumentsByUserIdWorker(action: GetDocumentsByUserId) {
         const response: AxiosResponse = yield call(axios.create().request, request)
         yield put({type: GET_DOCUMENTS_BY_USER_ID_SUCCEED, payload: response.data.fullDocumentDtos})
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

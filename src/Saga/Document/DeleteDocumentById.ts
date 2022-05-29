@@ -23,11 +23,7 @@ function* deleteDocumentByIdWorker(action: DeleteDocumentById) {
             yield put({type: DELETE_DOCUMENT_BY_ID_SUCCEED, payload: action.payload})
         }
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

@@ -1,6 +1,6 @@
 ﻿import React, {useEffect, useState} from "react";
 import Authorization from "../Authorization/Authorization"
-import {Route, Routes} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -204,12 +204,12 @@ export default function Main() {
                 </Toolbar>
             </AppBar>
 
-            <Routes>
-                <Route path="/" element={<Authorization/>}/>
-                <Route path="/base-logic-page" element={<AdminBasePage/>}/>
-                <Route path="/student-base-logic-page" element={<StudentBasePage/>}/>
-                <Route path="/profile" element={<Profile/>}/>
-            </Routes>
+            <Switch>
+                <Route path="/" component={Authorization}/>
+                <Route exact path="/base-logic-page" component={AdminBasePage}/>
+                <Route exact path="/student-base-logic-page" component={StudentBasePage}/>
+                <Route exact path="/profile" component={Profile}/>
+            </Switch>
         </div>
     );
 }

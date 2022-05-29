@@ -10,7 +10,7 @@ import {
 
 const initialState: IAlertState = {
     alert: {message: '', type: false},
-    loading: true
+    loading: false
 }
 
 const alert = (state = initialState, action: AlertActionTypes) => {

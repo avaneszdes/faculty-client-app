@@ -15,22 +15,23 @@ import {ADD_DOCUMENT_TYPE, DELETE_DOCUMENT_TYPE} from '../../Redux/Document/Docu
 import AlertComponent from "../Alerts/SuccessAlert";
 import AddPracticeAccordion from "../AdminAccordions/AddPracticeAccordion";
 import {ADD_PRACTICE, DELETE_PRACTICE, GET_PRACTICES} from "../../Redux/Practice/Practice-constants";
+import Loader from "../Loading/Loader";
 
 
 export default function AdminBasePage() {
 
     const dispatch = useDispatch()
     const docTypes = useSelector((rootState: IRootState) => rootState.document)
+    const loader = useSelector((x:IRootState) => x.alert.loading)
+
 
     useEffect(() => {
-
         dispatch({type: GET_PRACTICES, payload: ''})
         dispatch({type: GET_TEACHERS, payload: ''})
     }, []);
 
 
     const modifyStudent = (student: IUserInterface) => {
-        console.log(student)
         dispatch({type: EDIT_USER, payload: student})
     }
 
@@ -71,7 +72,7 @@ export default function AdminBasePage() {
     return (
         <div style={{marginTop: '60px'}}>
             <AlertComponent/>
-
+            <Loader hidden={loader}/>
             <AddPracticeAccordion addPractice={createPractice} deletePractice={deletePractice}/>
             <CreateUserAccordion createUser={createUser}/>
             <AddGroupAccordion addGroup={addGroup}/>

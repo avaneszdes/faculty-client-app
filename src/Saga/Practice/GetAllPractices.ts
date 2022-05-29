@@ -17,10 +17,8 @@ function* getAllPracticesWorker() {
         const response: AxiosResponse = yield call(axios.create().request, request)
         yield put({type: GET_PRACTICES_SUCCEED, payload: response.data.practiceDtos})
 
-    } catch (err: any) {
-        const {response} = err
-        const {request, ...errorObject} = response;
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+    } catch (e: any) {
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

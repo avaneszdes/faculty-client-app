@@ -28,7 +28,7 @@ const AlertComponent = () => {
 
     return (
         <div className={classes.root}>
-            <Snackbar open={Boolean(alert.message)} autoHideDuration={6000} onClose={() => {
+            <Snackbar open={Boolean(alert.message)} autoHideDuration={20000} onClose={() => {
                 dispatch({
                     type: CLEAR_ALERT_MESSAGE_SUCCEED,
                     payload:

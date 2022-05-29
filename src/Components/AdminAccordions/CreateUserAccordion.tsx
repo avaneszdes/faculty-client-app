@@ -161,7 +161,6 @@ export default function CreateUserAccordion({createUser}: Props) {
                     </Menu>
                 </div>
 
-                {/*<PracticeMenu isSet={params.practiceId > 0} setPractice={(practiceId) => setParams({...params, practiceId: practiceId})}/>*/}
 
                 <Button variant={'contained'} type="submit">
                     Создать пользователя

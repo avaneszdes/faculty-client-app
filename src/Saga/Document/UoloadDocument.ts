@@ -13,7 +13,7 @@ function* uploadDocumentWorker(action: UploadDocument) {
     const request: AxiosRequestConfig = {
         method: 'POST',
         headers: {"Access-Control-Allow-Origin": "*", "Content-Type": "application/json"},
-        url: links.uploadFile + action.payload.practiceId + '&doctypeId=' + action.payload.docTypeId + '&userId=' + action.payload.userId,
+        url: links.uploadFile + 0 + '&doctypeId=' + action.payload.docTypeId + '&userId=' + action.payload.userId,
         data: action.payload.file
     }
 
@@ -22,11 +22,7 @@ function* uploadDocumentWorker(action: UploadDocument) {
         yield put({type: UPLOAD_DOCUMENT_SUCCEED, payload: response.data as IDocument})
         yield Alert('Вы успешно сохранили документ!', 3000, true)
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
 
     yield put({type: LOADING_END_SUCCEED, payload: false})

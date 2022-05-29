@@ -71,7 +71,7 @@ export default function UploadDocumentsAccordion() {
             method: 'GET',
             responseType: 'blob', // Important
         }).then((response) => {
-            fileDownload(response.data, fileName.slice(62, fileName.length));
+            fileDownload(response.data, fileName);
         }).catch((response) => {
             alert(response);
         });

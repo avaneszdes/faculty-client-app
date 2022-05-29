@@ -11,7 +11,7 @@ function* importStudentsWorker(action: ImportStudents) {
     yield put({type: LOADING_START_SUCCEED, payload: true})
     const request: AxiosRequestConfig = {
         method: 'POST',
-        url: links.importStudents + action.payload.groupId + '&practiceId=' + action.payload.practiceId,
+        url: links.importStudents + action.payload.groupCode + '&practiceId=' + action.payload.practiceId,
         data: action.payload.file
     }
 

@@ -79,7 +79,7 @@ export default function DetailedActionDialog({close, isOpen, userData}: Props) {
             method: 'GET',
             responseType: 'blob', // Important
         }).then((response) => {
-            fileDownload(response.data, fileName.slice(62, fileName.length));
+            fileDownload(response.data, fileName);
         }).catch((response) => {
             alert(response);
         });
@@ -184,7 +184,7 @@ export default function DetailedActionDialog({close, isOpen, userData}: Props) {
                     {files.map(x =>
                         <div key={x.id} style={{margin: '15px 0px 0px 20px ', display: 'flex', alignItems: 'center'}}>
                             <Paper style={{padding: '8px 15px 8px 15px'}} elevation={10}>
-                                {x.filename.length > 50 ? x.filename.slice(61, x.filename.length) : x.filename}
+                                {x.filename}
                             </Paper>
                             <Button
                                 style={{margin: '0px 15px 0px 15px'}}

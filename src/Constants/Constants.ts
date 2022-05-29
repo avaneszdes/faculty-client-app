@@ -15,7 +15,7 @@ export default {
     createUser: host +  "admin/addUser",
     deleteUser: host +  "admin/deleteUser",
     updateUser: host +  "admin/updateUser",
-    importStudents: host +  "importStudents?groupId=",
+    importStudents: host +  "importStudents?groupCode=",
     getTeachers: host +  "admin/teachers",
     uploadFile: host +  "fileupload?practiceId=",
     deleteDocument: host +  "deleteFile/",
@@ -35,7 +35,7 @@ export default {
 
 export const documentStatuses = ['На рассмотрении', 'Принят', 'Отклонен' ]
 
-export const roles = ['АДМИНИСТРАТОР', 'СТУДЕНТ', 'ЗАВКАФЕДРОЙ', 'ОРГАНИЗАТОР ПРАКТИКИ', 'РУКОВОДИТЕЛЬ ПРАКТИКИ']
+export const roles = ['АДМИНИСТРАТОР', 'ЗАВКАФЕДРОЙ', 'ОРГАНИЗАТОР ПРАКТИКИ', 'РУКОВОДИТЕЛЬ ПРАКТИКИ']
 export const practicePlaceStatuses = ['На рассмотрении', 'Принят', 'Отклонен']
 
 // не предоставлен, на рассмотрении, утвержден

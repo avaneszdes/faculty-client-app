@@ -53,7 +53,8 @@ const user = (state = initialState, action: UserActionTypes) => {
                         return action.payload
                     }
                     return user
-                })
+                }),
+                user: action.payload.id === state.user?.id ? action.payload : state.user
             }
 
         default:

@@ -21,11 +21,7 @@ function* updateEventWorker(action: UpdateEvent) {
         yield put({type: UPDATE_EVENT_SUCCEED, payload: response.data})
         yield Alert('Событие успешно добавлено!', 3000, true)
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

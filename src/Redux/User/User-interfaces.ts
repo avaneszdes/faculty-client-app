@@ -27,7 +27,7 @@ export interface ICreateUserInterface {
 
 export interface ICsvFileUpload {
     file: FormData
-    groupId: number
+    groupCode: number
     practiceId: number
 }
 

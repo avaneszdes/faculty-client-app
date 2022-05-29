@@ -13,22 +13,17 @@ function* createEventWorker(action: CreateEvent) {
 
     yield put({type: LOADING_START_SUCCEED, payload: true})
     const request: AxiosRequestConfig = {
-        method: 'POST',
+        method: 'POST', url: links.addEvent,
         headers: {"Access-Control-Allow-Origin": "*"},
-        url: links.addEvent,
         data: {...action.payload, id: null}
     }
 
     try {
         const response: AxiosResponse = yield call(axios.create().request, request)
         yield put({type: CREATE_EVENT_SUCCEED, payload: response.data})
-        yield Alert('Событие успешно создано!', 3000, false)
+        yield Alert('Событие успешно создано!', 3000, true)
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject.data.error + '  ' + errorObject.data.status, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
     yield put({type: LOADING_END_SUCCEED, payload: false})
 }

@@ -18,11 +18,7 @@ function* getUserByIdWorker(action: GetUserById) {
         const response: AxiosResponse = yield call(axios.create().request, request)
         yield put({type: GET_USER_BY_ID_SUCCEED, payload: response.data})
     } catch (e: any) {
-
-        const {response} = e
-        const {request, ...errorObject} = response;
-
-        yield Alert(errorObject, 3000, false)
+        yield Alert(e.response.data, 3000, false)
     }
 
     yield put({type: LOADING_END_SUCCEED, payload: false})
