@@ -6,6 +6,7 @@ import {
     DELETE_DOCUMENT_TYPE_SUCCEED,
     GET_DOCUMENT_TYPES_SUCCEED,
     GET_DOCUMENTS_BY_USER_ID_SUCCEED,
+    PARSE_FILE_SUCCEED,
     UPLOAD_DOCUMENT_SUCCEED
 } from "./Document-constants";
 
@@ -20,6 +21,9 @@ const document = (state = initialState, action: DocumentActionTypes) => {
     switch (action.type) {
 
         case GET_DOCUMENTS_BY_USER_ID_SUCCEED:
+            return {...state, documents: action.payload}
+
+        case PARSE_FILE_SUCCEED:
             return {...state, documents: action.payload}
 
         case DELETE_DOCUMENT_BY_ID_SUCCEED:

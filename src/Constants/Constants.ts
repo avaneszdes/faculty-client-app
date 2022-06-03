@@ -20,6 +20,7 @@ export default {
     uploadFile: host +  "fileupload?practiceId=",
     deleteDocument: host +  "deleteFile/",
     getDocumentsByUserId: host +  "getFilesByUserId/",
+    parseFile: host +  "parseFile/",
     getDocumentTypes: host +  "admin/doctypes",
     updateFileStatus: host +  "updateDocumentStatus",
     addDocumentType: host +  "admin/addDoctype",
@@ -30,6 +31,12 @@ export default {
     deletePractice: host +  "practice/deletePractice",
     getAllPractices: host +  "practice/getPractices",
     getTeacherForStudent: host +  "admin/getTeacher?userId=",
+
+    addSpeciality: host +  "admin/addSpec",
+    deleteSpeciality: host +  "admin/deleteSpec",
+    getAllSpecialities: host +  "admin/specs",
+    getSpecialityById: host +  "admin/getSpec?specId=",
+    updateSpeciality: host +  "admin/updateSpec",
 }
 
 

@@ -12,7 +12,7 @@ function* addGroupWorker(action: CreateGroup) {
     const request: AxiosRequestConfig = {
         method: 'POST',
         url: links.addGroup,
-        data: { code : action.payload}
+        data: { code : action.payload.groupCode, specId: action.payload.specId}
     }
 
     try{

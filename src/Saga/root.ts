@@ -28,6 +28,11 @@ import {sendCommentWatcher} from "./Faculty/SendComment";
 import {deleteDocumentByIdWatcher} from "./Document/DeleteDocumentById";
 import {updateFileStatusByIdWatcher} from "./Document/UpdateFileStatus";
 import {importStudentsWatcher} from "./User/ImportStudentsFromFile";
+import {updateSpecialityWatcher} from "./Speciality/UpdateSpeciality";
+import {getSpecialityByIdWatcher} from "./Speciality/GetSpecialityById";
+import {getAllSpecialitiesWatcher} from "./Speciality/GetAllSpecialities";
+import {deleteSpecialityWatcher} from "./Speciality/DeleteSpeciality";
+import {addSpecialityWatcher} from "./Speciality/AddSpeciality";
 
 export function* rootSaga() {
     yield all([
@@ -59,6 +64,11 @@ export function* rootSaga() {
         deleteDocumentByIdWatcher(),
         updateFileStatusByIdWatcher(),
         importStudentsWatcher(),
+        updateSpecialityWatcher(),
+        getSpecialityByIdWatcher(),
+        getAllSpecialitiesWatcher(),
+        deleteSpecialityWatcher(),
+        addSpecialityWatcher(),
         getDocumentTypesWatcher()
     ]);
 }

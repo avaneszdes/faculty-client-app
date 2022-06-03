@@ -6,7 +6,7 @@ import {
     GET_DOCUMENT_TYPES,
     GET_DOCUMENT_TYPES_SUCCEED,
     GET_DOCUMENTS_BY_USER_ID,
-    GET_DOCUMENTS_BY_USER_ID_SUCCEED, UPDATE_FILE_STATUS_BY_ID,
+    GET_DOCUMENTS_BY_USER_ID_SUCCEED, PARSE_FILE, PARSE_FILE_SUCCEED, UPDATE_FILE_STATUS_BY_ID,
     UPLOAD_DOCUMENT,
     UPLOAD_DOCUMENT_SUCCEED
 } from "./Document-constants";
@@ -78,6 +78,16 @@ export interface UpdateFileStatusById {
     payload: {id: number, status: string}
 }
 
+export interface ParseFile {
+    type: typeof PARSE_FILE,
+    payload: number
+}
+
+export interface ParseFileSucceed {
+    type: typeof PARSE_FILE_SUCCEED,
+    payload: FormData
+}
+
 export type DocumentActionTypes =
     UploadDocument
     | DeleteDocumentById
@@ -92,4 +102,6 @@ export type DocumentActionTypes =
     | GetDocumentsByUserId
     | GetDocumentsByUserIdSucceed
     | UpdateFileStatusById
+    | ParseFile
+    | ParseFileSucceed
 

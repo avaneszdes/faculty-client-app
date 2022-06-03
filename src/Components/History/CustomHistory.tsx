@@ -7,6 +7,7 @@ import customHistory from "./history";
 interface Props extends BrowserRouterProps {
     history: BrowserHistory;
 }
+
 export const CustomRouter = ({ basename, history, children }: Props) => {
     const [state, setState] = useState({
         action: history.action,

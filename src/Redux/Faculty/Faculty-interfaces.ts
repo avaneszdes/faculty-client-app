@@ -11,5 +11,6 @@ export interface ICommentInterface{
 }
 export interface IGroup {
     id: number,
-    code: number
+    code: string
+    specId: number
 }

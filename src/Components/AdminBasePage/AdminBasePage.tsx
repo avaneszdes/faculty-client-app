@@ -16,13 +16,17 @@ import AlertComponent from "../Alerts/SuccessAlert";
 import AddPracticeAccordion from "../AdminAccordions/AddPracticeAccordion";
 import {ADD_PRACTICE, DELETE_PRACTICE, GET_PRACTICES} from "../../Redux/Practice/Practice-constants";
 import Loader from "../Loading/Loader";
+import SpecialitiesAccordion from "../AdminAccordions/AddSpeciality";
+import {ADD_SPECIALITY, DELETE_SPECIALITY} from "../../Redux/Specionality/Specionality-constants";
+import ParseDocumentAccordion from "../AdminAccordions/ParseDocumentAccordion";
 
 
 export default function AdminBasePage() {
 
     const dispatch = useDispatch()
     const docTypes = useSelector((rootState: IRootState) => rootState.document)
-    const loader = useSelector((x:IRootState) => x.alert.loading)
+    const specialities = useSelector((rootState: IRootState) => rootState.speciality.specialities)
+    const loader = useSelector((x: IRootState) => x.alert.loading)
 
 
     useEffect(() => {
@@ -41,9 +45,9 @@ export default function AdminBasePage() {
         }
     }
 
-    const addGroup = (group: string) => {
+    const addGroup = (group: string, specId: number) => {
         if (group !== '') {
-            dispatch({type: CREATE_GROUP, payload: group})
+            dispatch({type: CREATE_GROUP, payload: {groupCode: group, specId: specId}})
         }
     }
 
@@ -69,13 +73,21 @@ export default function AdminBasePage() {
         dispatch({type: DELETE_PRACTICE, payload: id})
     }
 
+    const addSpeciality = (name: string) => {
+        dispatch({type: ADD_SPECIALITY, payload: name})
+    }
+
+    const deleteSpeciality = (id: number) => {
+        dispatch({type: DELETE_SPECIALITY, payload: id})
+    }
+
     return (
         <div style={{marginTop: '60px'}}>
             <AlertComponent/>
             <Loader hidden={loader}/>
             <AddPracticeAccordion addPractice={createPractice} deletePractice={deletePractice}/>
             <CreateUserAccordion createUser={createUser}/>
-            <AddGroupAccordion addGroup={addGroup}/>
+            <AddGroupAccordion specialities={specialities} addGroup={addGroup}/>
             <ModifyStudentsAccordion
                 modifyStudent={modifyStudent}
                 getStudentsByGroup={getStudentsByGroup}
@@ -88,8 +100,12 @@ export default function AdminBasePage() {
                 deleteDocumentType={deleteDocumentType}
             />
             <UploadDocumentsAccordion/>
-
-
+            <SpecialitiesAccordion
+                specialities={specialities}
+                addSpeciality={addSpeciality}
+                deleteSpeciality={deleteSpeciality}
+            />
+            <ParseDocumentAccordion/>
         </div>
     );
 }

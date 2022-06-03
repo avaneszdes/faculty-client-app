@@ -24,6 +24,7 @@ import {GET_ALL_EVENTS_BY_USER_ID} from "../../Redux/Calendar/Calendar-constants
 import {GET_DOCUMENT_TYPES} from "../../Redux/Document/Document-constants";
 import {IRootState} from "../../Redux/configureStore";
 import Loader from "../Loading/Loader";
+import {GET_SPECIALITIES} from "../../Redux/Specionality/Specionality-constants";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,8 +68,6 @@ export default function SignIn() {
         password: ''
     }
 
-
-    const [inputEditHideBtn, setInputEditHideBtn] = useState(false)
     const formik = useFormik({
         initialValues: initValues,
         validationSchema: vScheme,
@@ -92,6 +91,7 @@ export default function SignIn() {
                         dispatch({type: AUTHORIZATION_SUCCEED, payload: { role: response.data.role , id: response.data.userId}})
                         history.push('/profile')
                     }
+                    dispatch({type: GET_SPECIALITIES, payload: 0})
                     dispatch({type: GET_DOCUMENT_TYPES, payload: ''})
                     dispatch({type: GET_USER_BY_ID, payload: response.data.userId})
                     dispatch({type: GET_ALL_EVENTS_BY_USER_ID, payload: response.data.userId})
@@ -103,10 +103,6 @@ export default function SignIn() {
 
         },
     })
-
-    const handleClose = () => {
-        setInputEditHideBtn(!inputEditHideBtn);
-    }
 
     return (
         <Container component="main" maxWidth="xs" style={{marginTop: '70px'}}>

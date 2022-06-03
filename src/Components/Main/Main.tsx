@@ -1,6 +1,6 @@
 ﻿import React, {useEffect, useState} from "react";
 import Authorization from "../Authorization/Authorization"
-import {Route, Switch} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -126,90 +126,91 @@ export default function Main() {
     }
 
 
-    return (<div>
-            <AppBar style={{height: `${windowDimensions.height > 1300 ? '80px' : '60px'}`, position: 'fixed'}}
-                    color="default" elevation={0} className={classes.appBar}>
-                <div onClick={() => home()} className={classes.logo}>
-                    <img alt={'img'} src={logoBntu} width={50} height={50}/>
-                </div>
+    return <div>
+        <AppBar style={{height: `${windowDimensions.height > 1300 ? '80px' : '60px'}`, position: 'fixed'}}
+                color="default" elevation={0} className={classes.appBar}>
+            <div onClick={() => home()} className={classes.logo}>
+                <img alt={'img'} src={logoBntu} width={50} height={50}/>
+            </div>
 
-                <Toolbar>
-
-
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
-                    {auth.role === 'ADMIN' && <h5 className="fromLeft" onClick={() => history.push('/base-logic-page')}>
-                        {t('main.basePage')}
-                    </h5>}
-
-                    {auth.role === 'STUDENT' && <h5 className="fromLeft" onClick={() => history.push('/student-base-logic-page')}>
-                        {t('main.basePage')}
-                    </h5>}
+            <Toolbar>
 
 
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
-                    <h5 className="fromLeft" onClick={handleOpen}>
-                        {t('main.calendar')}
-                    </h5>}
+                <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
+                {auth.role === 'ADMIN' && <h5 className="fromLeft" onClick={() => history.push('/base-logic-page')}>
+                    {t('main.basePage')}
+                </h5>}
+
+                {auth.role === 'STUDENT' &&
+                <h5 className="fromLeft" onClick={() => history.push('/student-base-logic-page')}>
+                    {t('main.basePage')}
+                </h5>}
 
 
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
+                {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
+                {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                <h5 className="fromLeft" onClick={handleOpen}>
+                    {t('main.calendar')}
+                </h5>}
+
+
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Calendar/>
+                    </Box>
+                </Modal>
+
+                {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
+                {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
+                <h5 className="fromLeft" onClick={() => history.push('/profile')}>
+                    {t('main.personalAccount')}
+                </h5>}
+
+                <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
+                {auth.role &&
+                <h5 className="fromLeft" onClick={() => logOut()}>
+                    {t('main.logOut')}
+                </h5>
+                }
+
+                {!auth.role &&
+                <h5 className="fromLeft" onClick={() => logIn()}>
+                    {t('main.logIn')}
+                </h5>}
+                <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
+                <div>
+                    <Button aria-controls="simple-menu" style={{all: 'unset'}}
+                            aria-haspopup="listbox" onClick={handleLanguageClick}>
+                        <h5 className="fromLeft">{t('main.language')}</h5>
+                    </Button>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleLanguageClose}
                     >
-                        <Box sx={style}>
-                            <Calendar/>
-                        </Box>
-                    </Modal>
+                        <MenuItem onClick={() => handleLanguageClose('en')}>{t('language.en')}</MenuItem>
+                        <MenuItem onClick={() => handleLanguageClose('ru')}>{t('language.ru')}</MenuItem>
+                        <MenuItem onClick={() => handleLanguageClose('zh')}>{t('language.zh')}</MenuItem>
+                    </Menu>
+                </div>
+            </Toolbar>
+        </AppBar>
 
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>}
-                    {(auth.role === 'ADMIN' || auth.role === 'STUDENT') &&
-                    <h5 className="fromLeft" onClick={() => history.push('/profile')}>
-                        {t('main.personalAccount')}
-                    </h5>}
+        <Routes>
+            <Route path="/" element={<Authorization/>}/>
+            <Route path="/base-logic-page" element={<AdminBasePage/>}/>
+            <Route path="/student-base-logic-page" element={<StudentBasePage/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+        </Routes>
+    </div>
 
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
-                    {auth.role &&
-                    <h5 className="fromLeft" onClick={() => logOut()}>
-                        {t('main.logOut')}
-                    </h5>
-                    }
-
-                    {!auth.role &&
-                    <h5 className="fromLeft" onClick={() => logIn()}>
-                        {t('main.logIn')}
-                    </h5>}
-                    <Divider orientation="vertical" flexItem sx={{height: '20px', marginTop: '20px'}}/>
-                    <div>
-                        <Button aria-controls="simple-menu" style={{all: 'unset'}}
-                                aria-haspopup="listbox" onClick={handleLanguageClick}>
-                            <h5 className="fromLeft">{t('main.language')}</h5>
-                        </Button>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleLanguageClose}
-                        >
-                            <MenuItem onClick={() => handleLanguageClose('en')}>{t('language.en')}</MenuItem>
-                            <MenuItem onClick={() => handleLanguageClose('ru')}>{t('language.ru')}</MenuItem>
-                            <MenuItem onClick={() => handleLanguageClose('zh')}>{t('language.zh')}</MenuItem>
-                        </Menu>
-                    </div>
-                </Toolbar>
-            </AppBar>
-
-            <Switch>
-                <Route path="/" component={Authorization}/>
-                <Route exact path="/base-logic-page" component={AdminBasePage}/>
-                <Route exact path="/student-base-logic-page" component={StudentBasePage}/>
-                <Route exact path="/profile" component={Profile}/>
-            </Switch>
-        </div>
-    );
 }

@@ -6,17 +6,17 @@ import i18n from "i18next";
 import history from './Components/History/history'
 import {Provider} from "react-redux";
 import configureStore from "./Redux/configureStore";
-import {Router} from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import {CustomRouter} from "./Components/History/CustomHistory";
 const store = configureStore()
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history}>
+        <CustomRouter history={history}>
             <I18nextProvider i18n={i18n}>
                 <Main/>
             </I18nextProvider>
-        </Router>
+        </CustomRouter>
     </Provider>,
     document.getElementById('root')
 );

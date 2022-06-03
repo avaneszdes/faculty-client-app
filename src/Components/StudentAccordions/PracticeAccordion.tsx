@@ -16,7 +16,6 @@ import {DELETE_DOCUMENT_BY_ID, UPLOAD_DOCUMENT} from "../../Redux/Document/Docum
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import axios from "axios";
-import Loader from "../Loading/Loader";
 
 const fileDownload = require('js-file-download');
 

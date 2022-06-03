@@ -1,6 +1,11 @@
 import {IFacultyState} from "./Faculty-interfaces";
 import {FacultyActionTypes} from "./Faculty-actions";
-import {CREATE_GROUP_SUCCEED, GET_COMMENTS_BY_USER_ID_SUCCEED, SEND_COMMENT_SUCCEED,} from "./Faculty-constants";
+import {
+    CREATE_GROUP_SUCCEED,
+    GET_COMMENTS_BY_USER_ID_SUCCEED,
+    SEND_COMMENT_SUCCEED,
+    UPDATE_GROUP_SUCCEED,
+} from "./Faculty-constants";
 
 const initialState: IFacultyState = {
     group: null,
@@ -13,6 +18,9 @@ const faculty = (state = initialState, action: FacultyActionTypes) => {
     switch (action.type) {
 
         case CREATE_GROUP_SUCCEED:
+            return {...state, group: action.payload}
+
+        case UPDATE_GROUP_SUCCEED:
             return {...state, group: action.payload}
 
         case GET_COMMENTS_BY_USER_ID_SUCCEED:
