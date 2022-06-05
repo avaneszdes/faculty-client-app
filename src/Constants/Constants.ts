@@ -25,7 +25,7 @@ export default {
     updateFileStatus: host +  "updateDocumentStatus",
     addDocumentType: host +  "admin/addDoctype",
     deleteDocumentType: host +  "admin/deleteDoctype",
-    addPracticeLocation: host +  "admin/addLocation",
+    addPracticeLocation: host +  "admin/addLocation?userId=",
     updatePracticeLocation: host +  "admin/updateLocation",
     addPractice: host +  "practice/addPractice",
     deletePractice: host +  "practice/deletePractice",

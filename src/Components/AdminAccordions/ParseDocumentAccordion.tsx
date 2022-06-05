@@ -9,21 +9,29 @@ import {useState} from "react";
 import axios from "axios";
 import fileDownload from "js-file-download";
 import PracticeMenu from "../AdminBasePage/PracticeMenu";
+import {useDispatch} from "react-redux";
+import {LOADING_END_SUCCEED, LOADING_START_SUCCEED, SET_ALERT_MESSAGE_SUCCEED} from "../../Redux/Alert/Alert-constants";
 
 
 export default function ParseDocumentAccordion (){
 
     const [practiceId, usePracticeId] = useState(0)
+    const dispatch = useDispatch()
 
     const parseDocumentBySpeciality = (id: number) => {
+
+        dispatch({type: LOADING_START_SUCCEED, payload: true})
+
         axios({
             url: "https://docker-heroku-demo-01.herokuapp.com/parseFile/" + id,
             method: 'GET',
             responseType: 'blob', // Important
         }).then((response) => {
-            fileDownload(response.data, 'практика');
+            fileDownload(response.data, 'практика.docx');
+            dispatch({type: LOADING_END_SUCCEED, payload: false})
         }).catch((response) => {
-            alert(response);
+            dispatch({type: SET_ALERT_MESSAGE_SUCCEED, payload: {message: response.message, type: false}})
+            dispatch({type: LOADING_END_SUCCEED, payload: false})
         });
     }
 

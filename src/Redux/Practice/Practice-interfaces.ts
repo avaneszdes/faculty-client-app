@@ -5,11 +5,14 @@ export interface IPracticeInterface {
 
 export interface INewPracticeInterface {
     name: string
+    start: string
+    end: string
 }
 
 export interface IPracticeLocationInterface {
     location: string
     status: string
+    userId: number
     id: number
 }
 

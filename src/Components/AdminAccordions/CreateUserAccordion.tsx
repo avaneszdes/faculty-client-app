@@ -11,6 +11,7 @@ import * as yup from "yup";
 import {ICreateUserInterface} from "../../Redux/User/User-interfaces";
 import {convertRole} from "../../Constants/Global";
 import {roles} from "../../Constants/Constants";
+import CheckIcon from "@mui/icons-material/Check";
 
 const initValues = {
     name: '',
@@ -20,13 +21,15 @@ const initValues = {
     login: '',
     role: '',
     teacherId: 0,
-    practiceId: 0
+    practiceId: 0,
+    dolj: null
 }
 
 const vScheme = yup.object().shape({
     name: yup.string().required("Required"),
     surname: yup.string().required("Required"),
     login: yup.string().required("Required"),
+    dolj: yup.string().required("Required"),
 })
 
 
@@ -39,6 +42,7 @@ export default function CreateUserAccordion({createUser}: Props) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const [params,setParams] = useState({role: '', practiceId: 0})
+    const [isSet,setIsSet] = useState(false)
 
     const formik = useFormik({
         initialValues: initValues,
@@ -61,6 +65,7 @@ export default function CreateUserAccordion({createUser}: Props) {
     const setRoleAndClose = (role: string) => {
         setAnchorEl(null)
         setParams({...params, role: role})
+        setIsSet(true)
     }
 
 
@@ -81,7 +86,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Фамилия'}
                     name='surname'
                     id='surname'
-                    style={{width: '14%'}}
+                    style={{width: '12%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.surname && Boolean(formik.errors.surname)}
                     value={formik.values.surname}
@@ -93,7 +98,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Имя'}
                     name='name'
                     id='name'
-                    style={{width: '14%'}}
+                    style={{width: '12%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.name && Boolean(formik.errors.name)}
                     value={formik.values.name}
@@ -105,7 +110,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Отчество'}
                     name='middleName'
                     id='middleName'
-                    style={{width: '14%'}}
+                    style={{width: '12%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.middleName && Boolean(formik.errors.middleName)}
                     value={formik.values.middleName}
@@ -117,7 +122,7 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Логин'}
                     name='login'
                     id='login'
-                    style={{width: '14%'}}
+                    style={{width: '12%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.login && Boolean(formik.errors.login)}
                     value={formik.values.login}
@@ -129,15 +134,28 @@ export default function CreateUserAccordion({createUser}: Props) {
                     label={'Пароль'}
                     name='password'
                     id='password'
-                    style={{width: '14%'}}
+                    style={{width: '12%'}}
                     onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     value={formik.values.password}
                     helperText={formik.touched.password && formik.errors.password}
                 />
+                <TextField
+                    size={'small'}
+                    placeholder={'Должность'}
+                    label={'Должность'}
+                    name='dolj'
+                    id='dolj'
+                    style={{width: '12%'}}
+                    onChange={formik.handleChange}
+                    error={formik.touched.dolj && Boolean(formik.errors.dolj)}
+                    value={formik.values.dolj}
+                    helperText={formik.touched.dolj && formik.errors.dolj}
+                />
 
                 <div>
                     <Button
+                        endIcon={isSet ? <CheckIcon/> : <div/>}
                         variant={'outlined'}
                         style={{height: '40px'}}
                         id="basic-button"

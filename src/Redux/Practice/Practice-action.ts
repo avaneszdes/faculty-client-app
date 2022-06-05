@@ -61,7 +61,7 @@ export interface GetPracticeByUserIdSucceed {
 
 export interface CreatePracticeLocation {
     type: typeof CREATE_PRACTICE_LOCATION,
-    payload: string
+    payload: {location: string, status: 'NEW', userId: number}
 }
 
 export interface CreatePracticeLocationSucceed {

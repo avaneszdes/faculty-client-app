@@ -33,7 +33,7 @@ export default function StudentBasePage() {
     const addPracticeLocation = (practicePlace: string) => {
         dispatch({
             type: CREATE_PRACTICE_LOCATION,
-            payload: {location: practicePlace, status: convertDocStatus(practicePlaceStatuses[0])}
+            payload: {location: practicePlace, status: convertDocStatus(practicePlaceStatuses[0]), userId: user?.id}
         })
     }
 

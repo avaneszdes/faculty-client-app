@@ -11,6 +11,7 @@ export interface IUserInterface {
     groupCode: string
     teacherId: number
     mark: number
+    dolj: string | null
 }
 
 export interface ICreateUserInterface {
@@ -21,6 +22,7 @@ export interface ICreateUserInterface {
     password: string
     login: string
     groupCode: string
+    dolj: string | null
     teacherId: number | null
     practiceId?: number | string | null
 }

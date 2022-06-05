@@ -73,7 +73,7 @@ export default function SignIn() {
         validationSchema: vScheme,
         onSubmit(values: AuthenticationDto) {
 
-            dispatch({type: LOADING_START_SUCCEED, payload: true})
+
             axios.post(links.authorize,
                 values,
                 {headers: {"Access-Control-Allow-Origin": "*"}})
@@ -153,6 +153,7 @@ export default function SignIn() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={() =>  dispatch({type: LOADING_START_SUCCEED, payload: true})}
                     >
                         {t('authorization.signInButton')}
                     </Button>

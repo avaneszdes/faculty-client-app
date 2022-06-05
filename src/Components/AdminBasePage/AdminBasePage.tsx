@@ -19,6 +19,7 @@ import Loader from "../Loading/Loader";
 import SpecialitiesAccordion from "../AdminAccordions/AddSpeciality";
 import {ADD_SPECIALITY, DELETE_SPECIALITY} from "../../Redux/Specionality/Specionality-constants";
 import ParseDocumentAccordion from "../AdminAccordions/ParseDocumentAccordion";
+import {INewPracticeInterface} from "../../Redux/Practice/Practice-interfaces";
 
 
 export default function AdminBasePage() {
@@ -65,8 +66,8 @@ export default function AdminBasePage() {
         dispatch({type: DELETE_DOCUMENT_TYPE, payload: id})
     }
 
-    const createPractice = (name: string) => {
-        dispatch({type: ADD_PRACTICE, payload: name})
+    const createPractice = (practice: INewPracticeInterface) => {
+        dispatch({type: ADD_PRACTICE, payload: practice})
     }
 
     const deletePractice = (id: number) => {
@@ -87,6 +88,11 @@ export default function AdminBasePage() {
             <Loader hidden={loader}/>
             <AddPracticeAccordion addPractice={createPractice} deletePractice={deletePractice}/>
             <CreateUserAccordion createUser={createUser}/>
+            <SpecialitiesAccordion
+                specialities={specialities}
+                addSpeciality={addSpeciality}
+                deleteSpeciality={deleteSpeciality}
+            />
             <AddGroupAccordion specialities={specialities} addGroup={addGroup}/>
             <ModifyStudentsAccordion
                 modifyStudent={modifyStudent}
@@ -100,11 +106,7 @@ export default function AdminBasePage() {
                 deleteDocumentType={deleteDocumentType}
             />
             <UploadDocumentsAccordion/>
-            <SpecialitiesAccordion
-                specialities={specialities}
-                addSpeciality={addSpeciality}
-                deleteSpeciality={deleteSpeciality}
-            />
+
             <ParseDocumentAccordion/>
         </div>
     );

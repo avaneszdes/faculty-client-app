@@ -14,7 +14,7 @@ function* addPracticeWorker(action: AddPractice) {
     const request: AxiosRequestConfig = {
         method: 'POST',
         url: links.addPractice,
-        data: {name: action.payload}
+        data: action.payload
     }
 
     try {

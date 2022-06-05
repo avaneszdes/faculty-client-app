@@ -20,7 +20,8 @@ const initValues: ICreateUserInterface = {
     role: 'STUDENT',
     groupCode: '',
     teacherId: 0,
-    practiceId: 0
+    practiceId: 0,
+    dolj: null
 }
 
 const vScheme = yup.object().shape({

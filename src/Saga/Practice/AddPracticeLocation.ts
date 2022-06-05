@@ -11,8 +11,8 @@ function* addPracticeLocationWorker(action: CreatePracticeLocation) {
     yield put({type: LOADING_START_SUCCEED, payload: true})
     const request: AxiosRequestConfig = {
         method: 'POST',
-        url: links.addPracticeLocation,
-        data: action.payload
+        url: links.addPracticeLocation + action.payload.userId,
+        data: {status: action.payload.status, location: action.payload.location}
     }
 
     try {
